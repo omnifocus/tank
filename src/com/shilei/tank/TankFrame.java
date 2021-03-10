@@ -45,7 +45,6 @@ public class TankFrame extends Frame {
                         break;
                 }
                 setDir();
-                repaint();
 
             }
 
@@ -66,7 +65,6 @@ public class TankFrame extends Frame {
                         break;
                 }
                 setDir();
-                repaint();
             }
         });
     }
@@ -116,48 +114,34 @@ public class TankFrame extends Frame {
 
 
     private void setDir() {
-        if (isUp && isLeft) {
-            dir = Dir.UL;
-            return;
-        }
-        if (isUp && isRight) {
-            dir = Dir.UR;
-            return;
-        }
-
-        if (isDown && isLeft) {
-            dir = Dir.DL;
-            return;
-        }
-
-        if (isDown && isRight) {
-            dir = Dir.DR;
-            return;
-        }
-
-        if (isUp) {
+        if (isUp && !isDown && !isLeft && !isRight)
             dir = Dir.Up;
-            return;
-        }
-
-        if (isDown) {
+        if (!isUp && isDown && !isLeft && !isRight)
             dir = Dir.Down;
-            return;
-        }
-
-        if (isLeft) {
+        if (!isUp && !isDown && isLeft && !isRight)
             dir = Dir.Left;
-            return;
-        }
-        if (isRight) {
+        if (!isUp && !isDown && !isLeft && isRight)
             dir = Dir.Right;
-            return;
-       }
 
-        if(! isUp &&!isDown &&!isLeft && !isRight ) {
-            dir = Dir.Stop;
-            return;
+        if (isUp && isLeft && !isRight && !isDown) {
+            dir = Dir.UL;
         }
+        if (isUp && isRight && !isLeft && !isDown) {
+            dir = Dir.UR;
+        }
+
+        if (isDown && isLeft && !isUp && !isRight) {
+            dir = Dir.DL;
+        }
+
+        if (isDown && isRight && !isUp && !isLeft) {
+            dir = Dir.DR;
+        }
+
+        if((! isUp &&!isDown &&!isLeft && !isRight) ||(isUp && isDown) || (isLeft && isRight) ) {
+            dir = Dir.Stop;
+        }
+
     }
 
 }
