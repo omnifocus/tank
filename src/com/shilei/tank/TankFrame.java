@@ -5,6 +5,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
+    int x=20,y=30;
     public TankFrame() {
         setSize(200,200);
         setLocation(300,200);
@@ -21,6 +22,8 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        g.fillRect(100,100,50,50);
+        x+=10;
+        y+=10;
+        g.fillRect(x,y,50,50);
     }
 }
