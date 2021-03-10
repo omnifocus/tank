@@ -9,13 +9,14 @@ import java.awt.event.WindowEvent;
 import static java.awt.event.KeyEvent.*;
 
 public class TankFrame extends Frame {
-    boolean isUp,isDown,isLeft,isRight;
+    boolean isUp, isDown, isLeft, isRight;
     Dir dir = Dir.Down;
     int speed = 5;
-    int x=20,y=30;
+    int x = 20, y = 30;
+
     public TankFrame() {
-        setSize(200,200);
-        setLocation(300,200);
+        setSize(200, 200);
+        setLocation(300, 200);
         setVisible(true);
         setResizable(false);
         setTitle("TankWar");
@@ -44,6 +45,7 @@ public class TankFrame extends Frame {
                         break;
                 }
                 setDir();
+                repaint();
 
             }
 
@@ -63,7 +65,8 @@ public class TankFrame extends Frame {
                         isDown = false;
                         break;
                 }
-//                setDir();
+                setDir();
+                repaint();
             }
         });
     }
@@ -83,62 +86,78 @@ public class TankFrame extends Frame {
 //            x += 5;
 
 
-
         if (dir == Dir.Up) {
-            y -= 5;
+            y -= speed;
         } else if (dir == Dir.Down) {
-            y += 5;
+            y += speed;
         } else if (dir == Dir.Left) {
-            x -= 5;
+            x -= speed;
         } else if (dir == Dir.Right) {
-            x += 5;
+            x += speed;
         } else if (dir == Dir.UL) {
-            x -= 5;
-            y -= 5;
+            x -= speed;
+            y -= speed;
         } else if (dir == Dir.UR) {
-            x += 5;
-            y -= 5;
+            x += speed;
+            y -= speed;
         } else if (dir == Dir.DL) {
-            y += 5;
-            x -= 5;
-        } else {
-            y += 5;
-            x += 5;
+            y += speed;
+            x -= speed;
+        } else if (dir == Dir.DR) {
+            y += speed;
+            x += speed;
+        } else if (dir == Dir.Stop) {
+            //do nothing
         }
 
-        g.fillRect(x,y,50,50);
+
+        g.fillRect(x, y, 50, 50);
     }
 
 
     private void setDir() {
         if (isUp && isLeft) {
             dir = Dir.UL;
+            return;
         }
         if (isUp && isRight) {
             dir = Dir.UR;
+            return;
         }
 
         if (isDown && isLeft) {
             dir = Dir.DL;
+            return;
         }
 
-        if(isDown && isRight) {
+        if (isDown && isRight) {
             dir = Dir.DR;
+            return;
         }
 
         if (isUp) {
             dir = Dir.Up;
+            return;
         }
 
         if (isDown) {
             dir = Dir.Down;
+            return;
         }
 
         if (isLeft) {
             dir = Dir.Left;
+            return;
         }
-        if (isRight)
+        if (isRight) {
             dir = Dir.Right;
+            return;
+       }
+
+        if(! isUp &&!isDown &&!isLeft && !isRight ) {
+            dir = Dir.Stop;
+            return;
         }
+    }
 
 }
