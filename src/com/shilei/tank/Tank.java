@@ -10,36 +10,38 @@ public class Tank {
     boolean isUp, isDown, isLeft, isRight;
     Dir dir = Dir.Down;
     int x = 20, y = 30;
+    //增加是否移动属性
+    boolean isMoving;
     public static final int TankW = 50;
     public static final int TankH = 50;
     public static final int speed = 5;
 
 
     void draw(Graphics g) {
-        if (dir == Dir.Up) {
-            y -= speed;
-        } else if (dir == Dir.Down) {
-            y += speed;
-        } else if (dir == Dir.Left) {
-            x -= speed;
-        } else if (dir == Dir.Right) {
-            x += speed;
-        } else if (dir == Dir.UL) {
-            x -= speed;
-            y -= speed;
-        } else if (dir == Dir.UR) {
-            x += speed;
-            y -= speed;
-        } else if (dir == Dir.DL) {
-            y += speed;
-            x -= speed;
-        } else if (dir == Dir.DR) {
-            y += speed;
-            x += speed;
-        } else if (dir == Dir.Stop) {
-            //do nothing
+        //移动状态下画出来才有效果
+        if (isMoving) {
+            if (dir == Dir.Up) {
+                y -= speed;
+            } else if (dir == Dir.Down) {
+                y += speed;
+            } else if (dir == Dir.Left) {
+                x -= speed;
+            } else if (dir == Dir.Right) {
+                x += speed;
+            } else if (dir == Dir.UL) {
+                x -= speed;
+                y -= speed;
+            } else if (dir == Dir.UR) {
+                x += speed;
+                y -= speed;
+            } else if (dir == Dir.DL) {
+                y += speed;
+                x -= speed;
+            } else if (dir == Dir.DR) {
+                y += speed;
+                x += speed;
+            }
         }
-
         g.fillRect(x, y, TankW,TankH);
 
     }
@@ -68,10 +70,7 @@ public class Tank {
         if (isDown && isRight && !isUp && !isLeft) {
             dir = Dir.DR;
         }
-
-        if((! isUp &&!isDown &&!isLeft && !isRight) ||(isUp && isDown) || (isLeft && isRight) ) {
-            dir = Dir.Stop;
-        }
+        // 无需通过方向判断是否Stop
 
     }
 
@@ -92,6 +91,7 @@ public class Tank {
                 break;
         }
         setDir();
+        isMoving = true;
 
     }
 
@@ -111,5 +111,6 @@ public class Tank {
                 break;
         }
         setDir();
+        isMoving = false;
     }
 }
