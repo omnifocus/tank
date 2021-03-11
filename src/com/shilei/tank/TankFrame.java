@@ -9,12 +9,14 @@ import java.awt.event.WindowEvent;
 import static java.awt.event.KeyEvent.*;
 
 public class TankFrame extends Frame {
+    int frameW = 500, frameH = 500;
+    int x = 300, y = 200;
     Tank tank = new Tank();
 
 
     public TankFrame() {
-        setSize(200, 200);
-        setLocation(300, 200);
+        setSize(frameW, frameH);
+        setLocation(x, y);
         setVisible(true);
         setResizable(false);
         setTitle("TankWar");
@@ -40,12 +42,27 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
+        Color originColor = g.getColor();
+        g.setColor(Color.black);
+        g.fillRect(0,0,frameW,frameH);
         tank.draw(g);
+        g.setColor(originColor);
     }
 
 
-
-
-
-
+//    Image offScreenImage ;
+//
+//    @Override
+//    public void update(Graphics g) {
+//        if (offScreenImage == null) {
+//            offScreenImage = this.createImage(frameW,frameH);
+//        }
+//        Graphics gOffscreen = offScreenImage.getGraphics();
+//        Color c = gOffscreen.getColor();
+//        gOffscreen.setColor(Color.BLACK);
+//        gOffscreen.fillRect(0,0,frameW,frameH);
+//        gOffscreen.setColor(c);
+//        paint(gOffscreen);
+//        g.drawImage(offScreenImage,0,0,null);
+//    }
 }

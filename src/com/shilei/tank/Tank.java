@@ -20,6 +20,7 @@ public class Tank {
 
     void draw(Graphics g) {
         Color originColor = g.getColor();
+        g.setColor(Color.yellow);
         g.fillRect(x, y, TankW,TankH);
         g.setColor(originColor);
         //画完再移动
