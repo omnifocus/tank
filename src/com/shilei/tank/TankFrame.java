@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -12,8 +13,7 @@ public class TankFrame extends Frame {
     int frameW = 500, frameH = 500;
     int x = 300, y = 200;
     Tank tank = new Tank(x,y,Dir.Right,this);
-    Bullet bullet;
-
+    java.util.List<Bullet> bullets = new ArrayList<>();
 
     public TankFrame() {
         setSize(frameW, frameH);
@@ -46,9 +46,11 @@ public class TankFrame extends Frame {
         Color originColor = g.getColor();
         g.setColor(Color.black);
         g.fillRect(0,0,frameW,frameH);
+        g.setColor(Color.orange);
+        g.drawString("当前子弹数量：" + bullets.size(),10,50);
         tank.draw(g);
-        if (bullet != null)
-            bullet.draw(g);
+        for(Bullet b : bullets)
+            b.draw(g);
         g.setColor(originColor);
     }
 
