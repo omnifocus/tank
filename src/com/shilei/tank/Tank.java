@@ -18,31 +18,36 @@ public class Tank {
 
 
     void draw(Graphics g) {
-        //移动状态下画出来才有效果
-        if (isMoving) {
-            if (dir == Dir.Up) {
-                y -= speed;
-            } else if (dir == Dir.Down) {
-                y += speed;
-            } else if (dir == Dir.Left) {
-                x -= speed;
-            } else if (dir == Dir.Right) {
-                x += speed;
-            } else if (dir == Dir.UL) {
-                x -= speed;
-                y -= speed;
-            } else if (dir == Dir.UR) {
-                x += speed;
-                y -= speed;
-            } else if (dir == Dir.DL) {
-                y += speed;
-                x -= speed;
-            } else if (dir == Dir.DR) {
-                y += speed;
-                x += speed;
-            }
-        }
+        move();
         g.fillRect(x, y, TankW,TankH);
+
+    }
+
+    private void move() {
+        //移动状态下画出来才有效果
+        if (!isMoving)
+            return;
+        if (dir == Dir.Up) {
+            y -= speed;
+        } else if (dir == Dir.Down) {
+            y += speed;
+        } else if (dir == Dir.Left) {
+            x -= speed;
+        } else if (dir == Dir.Right) {
+            x += speed;
+        } else if (dir == Dir.UL) {
+            x -= speed;
+            y -= speed;
+        } else if (dir == Dir.UR) {
+            x += speed;
+            y -= speed;
+        } else if (dir == Dir.DL) {
+            y += speed;
+            x -= speed;
+        } else if (dir == Dir.DR) {
+            y += speed;
+            x += speed;
+        }
 
     }
 
