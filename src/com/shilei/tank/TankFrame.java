@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -49,8 +50,15 @@ public class TankFrame extends Frame {
         g.setColor(Color.orange);
         g.drawString("当前子弹数量：" + bullets.size(),10,50);
         tank.draw(g);
-        for(Bullet b : bullets)
+
+        final Iterator<Bullet> iterator = bullets.iterator();
+        while (iterator.hasNext()) {
+            final Bullet b = iterator.next();
+            if (!b.isAlive) {
+                iterator.remove();
+            }
             b.draw(g);
+        }
         g.setColor(originColor);
     }
 

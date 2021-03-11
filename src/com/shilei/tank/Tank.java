@@ -134,7 +134,7 @@ public class Tank {
     }
 
     private void fire() {
-      Bullet bullet = new Bullet(x + TankW/2,y+TankH/2,dir);
+      Bullet bullet = new Bullet(x + TankW/2,y+TankH/2,dir,this.tankFrame);
       this.tankFrame.bullets.add(bullet);
     }
 }
