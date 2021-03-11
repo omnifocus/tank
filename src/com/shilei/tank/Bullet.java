@@ -7,9 +7,9 @@ import static java.awt.event.KeyEvent.VK_CONTROL;
 
 public class Bullet {
     private int x,y;
-    public static final int BULLETW = 5;
-    public static final int BULLETH = 5;
-    public static final int BULLET_SPEED = 10;
+    public static final int BULLETW = 10;
+    public static final int BULLETH = 10;
+    public static final int BULLET_SPEED = 1;
     private Dir dir;
 
     public Bullet(int x, int y, Dir dir) {
@@ -20,6 +20,7 @@ public class Bullet {
 
     public void draw(Graphics g) {
         Color originColor = g.getColor();
+        g.setColor(Color.RED);
         g.fillOval(x,y,BULLETW,BULLETH);
         g.setColor(originColor);
         move();

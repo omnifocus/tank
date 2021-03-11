@@ -11,7 +11,8 @@ import static java.awt.event.KeyEvent.*;
 public class TankFrame extends Frame {
     int frameW = 500, frameH = 500;
     int x = 300, y = 200;
-    Tank tank = new Tank();
+    Tank tank = new Tank(x,y,Dir.Right,this);
+    Bullet bullet;
 
 
     public TankFrame() {
@@ -46,6 +47,8 @@ public class TankFrame extends Frame {
         g.setColor(Color.black);
         g.fillRect(0,0,frameW,frameH);
         tank.draw(g);
+        if (bullet != null)
+            bullet.draw(g);
         g.setColor(originColor);
     }
 
