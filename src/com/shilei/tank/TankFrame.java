@@ -11,7 +11,7 @@ import java.util.Iterator;
 import static java.awt.event.KeyEvent.*;
 
 public class TankFrame extends Frame {
-    int frameW = 500, frameH = 500;
+    public static final int frameW = 500, frameH = 500;
     int x = 300, y = 200;
     Tank tank = new Tank(x,y,Dir.Right,this);
     java.util.List<Bullet> bullets = new ArrayList<>();
@@ -52,13 +52,16 @@ public class TankFrame extends Frame {
         tank.draw(g);
 
         final Iterator<Bullet> iterator = bullets.iterator();
-        while (iterator.hasNext()) {
-            final Bullet b = iterator.next();
-            if (!b.isAlive) {
-                iterator.remove();
-            }
-            b.draw(g);
-        }
+//        while (iterator.hasNext()) {
+//            final Bullet b = iterator.next();
+//            if (!b.isAlive) {
+//                iterator.remove();
+//            }
+//            b.draw(g);
+//        }
+        for (int i=0;i<bullets.size();i++)
+            bullets.get(i).draw(g);
+
         g.setColor(originColor);
     }
 

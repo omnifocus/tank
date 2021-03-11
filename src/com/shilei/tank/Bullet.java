@@ -22,6 +22,8 @@ public class Bullet {
     }
 
     public void draw(Graphics g) {
+        if (!isAlive)
+            this.tf.bullets.remove(this);
         Color originColor = g.getColor();
         g.setColor(Color.RED);
         g.fillOval(x,y,BULLETW,BULLETH);
@@ -51,8 +53,8 @@ public class Bullet {
             y += BULLET_SPEED;
             x += BULLET_SPEED;
         }
-
-        if (x <= 0 || x >= tf.frameW || y <=0 || y >= tf.frameH) {
+        //只用获取TankFrame，不需要持有引用
+        if (x <= 0 || x >= TankFrame.frameW || y <=0 || y >= TankFrame.frameH) {
             //会报java.util.ConcurrentModificationException
 //            tf.bullets.remove(this);
             this.isAlive = false;
