@@ -12,6 +12,7 @@ public class Tank {
     int x = 20, y = 30;
     //增加是否移动属性
     boolean isMoving;
+    Bullet bullet;
     public static final int TankW = 50;
     public static final int TankH = 50;
     public static final int TANK_SPEED = 5;
@@ -23,6 +24,9 @@ public class Tank {
         g.setColor(originColor);
         //画完再移动
         move();
+
+        if (bullet != null)
+            bullet.draw(g);
     }
 
     private void move() {
@@ -116,8 +120,16 @@ public class Tank {
             case VK_DOWN:
                 isDown = false;
                 break;
+
+            case VK_CONTROL:
+                fire();
+                break;
         }
         setDir();
         isMoving = false;
+    }
+
+    private void fire() {
+      bullet = new Bullet(x + TankW/2,y+TankH/2,dir);
     }
 }

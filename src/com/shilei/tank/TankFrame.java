@@ -10,7 +10,6 @@ import static java.awt.event.KeyEvent.*;
 
 public class TankFrame extends Frame {
     Tank tank = new Tank();
-    Bullet bullet = new Bullet(50,50,Dir.Right);
 
 
     public TankFrame() {
@@ -42,7 +41,6 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         tank.draw(g);
-        bullet.draw(g);
     }
 
 

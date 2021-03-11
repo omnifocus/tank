@@ -1,6 +1,9 @@
 package com.shilei.tank;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+
+import static java.awt.event.KeyEvent.VK_CONTROL;
 
 public class Bullet {
     private int x,y;
@@ -46,5 +49,6 @@ public class Bullet {
         }
 
     }
+
 
 }
