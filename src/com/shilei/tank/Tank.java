@@ -16,17 +16,26 @@ public class Tank {
     public static final int TankH = 50;
     public static final int TANK_SPEED = 5;
     TankFrame tankFrame;
+    boolean isAlive = true;
+    boolean isMainTank;
 
-    public Tank(int x, int y,Dir dir, TankFrame tankFrame) {
+    public Tank(int x, int y,Dir dir, boolean isMainTank, TankFrame tankFrame) {
         this.dir = dir;
         this.x = x;
         this.y = y;
+        this.isMainTank = isMainTank;
         this.tankFrame = tankFrame;
     }
 
     void draw(Graphics g) {
+        if (!isAlive && !isMainTank) {
+            tankFrame.enemyTanks.remove(this);
+        }
         Color originColor = g.getColor();
-        g.setColor(Color.yellow);
+        if (isMainTank)
+            g.setColor(Color.yellow);
+        else
+            g.setColor(Color.green);
         g.fillRect(x, y, TankW,TankH);
         g.setColor(originColor);
         //画完再移动

@@ -2,6 +2,7 @@ package com.shilei.tank;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Rectangle2D;
 
 import static java.awt.event.KeyEvent.VK_CONTROL;
 
@@ -63,4 +64,10 @@ public class Bullet {
     }
 
 
+    public void collide(Tank tank) {
+        if (new Rectangle(x,y,BULLETW,BULLETH).intersects(new Rectangle(tank.x,tank.y,Tank.TankW,Tank.TankH))) {
+            isAlive = false;
+            tank.isAlive = false;
+        }
+    }
 }

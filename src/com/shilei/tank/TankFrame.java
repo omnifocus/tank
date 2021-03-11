@@ -11,10 +11,11 @@ import java.util.Iterator;
 import static java.awt.event.KeyEvent.*;
 
 public class TankFrame extends Frame {
-    public static final int frameW = 500, frameH = 500;
+    public static final int frameW = 800, frameH = 500;
     int x = 300, y = 200;
-    Tank tank = new Tank(x,y,Dir.Right,this);
+    Tank tank = new Tank(x,y,Dir.Right,true,this);
     java.util.List<Bullet> bullets = new ArrayList<>();
+    java.util.List<Tank> enemyTanks = new ArrayList<>();
 
     public TankFrame() {
         setSize(frameW, frameH);
@@ -22,6 +23,12 @@ public class TankFrame extends Frame {
         setVisible(true);
         setResizable(false);
         setTitle("TankWar");
+
+        for (int i=0;i<10;i++) {
+            Tank tank = new Tank(i*60, 100,Dir.Down,false,this);
+            enemyTanks.add(tank);
+        }
+
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -51,7 +58,7 @@ public class TankFrame extends Frame {
         g.drawString("当前子弹数量：" + bullets.size(),10,50);
         tank.draw(g);
 
-        final Iterator<Bullet> iterator = bullets.iterator();
+//        final Iterator<Bullet> iterator = bullets.iterator();
 //        while (iterator.hasNext()) {
 //            final Bullet b = iterator.next();
 //            if (!b.isAlive) {
@@ -59,6 +66,17 @@ public class TankFrame extends Frame {
 //            }
 //            b.draw(g);
 //        }
+
+        for (int i=0;i<enemyTanks.size();i++) {
+            enemyTanks.get(i).draw(g);
+        }
+
+        for (int i=0;i<bullets.size();i++) {
+            for (int j=0;j<enemyTanks.size();j++) {
+                bullets.get(i).collide(enemyTanks.get(j));
+            }
+        }
+
         for (int i=0;i<bullets.size();i++)
             bullets.get(i).draw(g);
 
