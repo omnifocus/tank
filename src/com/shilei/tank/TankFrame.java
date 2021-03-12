@@ -84,19 +84,19 @@ public class TankFrame extends Frame {
     }
 
 
-//    Image offScreenImage ;
-//
-//    @Override
-//    public void update(Graphics g) {
-//        if (offScreenImage == null) {
-//            offScreenImage = this.createImage(frameW,frameH);
-//        }
-//        Graphics gOffscreen = offScreenImage.getGraphics();
-//        Color c = gOffscreen.getColor();
-//        gOffscreen.setColor(Color.BLACK);
-//        gOffscreen.fillRect(0,0,frameW,frameH);
-//        gOffscreen.setColor(c);
-//        paint(gOffscreen);
-//        g.drawImage(offScreenImage,0,0,null);
-//    }
+    Image offScreenImage ;
+
+    @Override
+    public void update(Graphics g) {
+        if (offScreenImage == null) {
+            offScreenImage = this.createImage(frameW,frameH);
+        }
+        Graphics gOffscreen = offScreenImage.getGraphics();
+        Color c = gOffscreen.getColor();
+        gOffscreen.setColor(Color.BLACK);
+        gOffscreen.fillRect(0,0,frameW,frameH);
+        gOffscreen.setColor(c);
+        paint(gOffscreen);
+        g.drawImage(offScreenImage,0,0,null);
+    }
 }

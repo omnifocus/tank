@@ -32,11 +32,7 @@ public class Tank {
             tankFrame.enemyTanks.remove(this);
         }
         Color originColor = g.getColor();
-        if (isMainTank)
-            g.setColor(Color.yellow);
-        else
-            g.setColor(Color.green);
-        g.fillRect(x, y, TankW,TankH);
+        g.drawImage(ResourceMgr.u,x,y,null);
         g.setColor(originColor);
         //画完再移动
         move();
