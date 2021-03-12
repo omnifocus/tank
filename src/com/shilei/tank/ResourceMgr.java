@@ -6,6 +6,7 @@ import java.io.IOException;
 
 public class ResourceMgr {
     public static BufferedImage u,d,l,r,ul,ur,dl,dr;
+    public static BufferedImage bu,bd,bl,br,bul,bur,bdl,bdr;
 
     static  {
         try {
@@ -17,6 +18,15 @@ public class ResourceMgr {
             ur = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("tankRU.gif"));
             dl = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("tankLD.gif"));
             dr = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("tankRD.gif"));
+
+            bu = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("bulletU.gif"));
+            bd = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("bulletD.gif"));
+            bl = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("bulletL.gif"));
+            br = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("bulletR.gif"));
+            bul = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("missileLU.gif"));
+            bur = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("missileRU.gif"));
+            bdl = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("missileLD.gif"));
+            bdr = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("missileRD.gif"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -8,8 +8,8 @@ import static java.awt.event.KeyEvent.VK_CONTROL;
 
 public class Bullet {
     private int x,y;
-    public static final int BULLETW = 10;
-    public static final int BULLETH = 10;
+    public static final int BULLETW = ResourceMgr.bu.getWidth();
+    public static final int BULLETH = ResourceMgr.bu.getHeight();
     public static final int BULLET_SPEED = 10;
     private Dir dir;
     private TankFrame tf;
@@ -25,10 +25,32 @@ public class Bullet {
     public void draw(Graphics g) {
         if (!isAlive)
             this.tf.bullets.remove(this);
-        Color originColor = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x,y,BULLETW,BULLETH);
-        g.setColor(originColor);
+        switch (dir) {
+            case Up:
+                g.drawImage(ResourceMgr.bu,x,y,null);
+                break;
+            case Down:
+                g.drawImage(ResourceMgr.bd,x,y,null);
+                break;
+            case Left:
+                g.drawImage(ResourceMgr.bl,x,y,null);
+                break;
+            case Right:
+                g.drawImage(ResourceMgr.br,x,y,null);
+                break;
+            case UL:
+                g.drawImage(ResourceMgr.bul,x,y,null);
+                break;
+            case UR:
+                g.drawImage(ResourceMgr.bur,x,y,null);
+                break;
+            case DL:
+                g.drawImage(ResourceMgr.bdl,x,y,null);
+                break;
+            case DR:
+                g.drawImage(ResourceMgr.bdr,x,y,null);
+                break;
+        }
         move();
     }
 

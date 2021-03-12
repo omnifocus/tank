@@ -12,14 +12,14 @@ public class Tank {
     int x = 20, y = 30;
     //增加是否移动属性
     boolean isMoving;
-    public static final int TankW = 50;
-    public static final int TankH = 50;
+    public static final int TankW = ResourceMgr.u.getWidth();
+    public static final int TankH = ResourceMgr.u.getHeight();
     public static final int TANK_SPEED = 5;
     TankFrame tankFrame;
     boolean isAlive = true;
     boolean isMainTank;
 
-    public Tank(int x, int y,Dir dir, boolean isMainTank, TankFrame tankFrame) {
+    public Tank(int x, int y, Dir dir, boolean isMainTank, TankFrame tankFrame) {
         this.dir = dir;
         this.x = x;
         this.y = y;
@@ -33,28 +33,28 @@ public class Tank {
         }
         switch (dir) {
             case Up:
-                g.drawImage(ResourceMgr.u,x,y,null);
+                g.drawImage(ResourceMgr.u, x, y, null);
                 break;
             case Down:
-                g.drawImage(ResourceMgr.d,x,y,null);
+                g.drawImage(ResourceMgr.d, x, y, null);
                 break;
             case Left:
-                g.drawImage(ResourceMgr.l,x,y,null);
+                g.drawImage(ResourceMgr.l, x, y, null);
                 break;
             case Right:
-                g.drawImage(ResourceMgr.r,x,y,null);
+                g.drawImage(ResourceMgr.r, x, y, null);
                 break;
             case UL:
-                g.drawImage(ResourceMgr.ul,x,y,null);
+                g.drawImage(ResourceMgr.ul, x, y, null);
                 break;
             case UR:
-                g.drawImage(ResourceMgr.ur,x,y,null);
+                g.drawImage(ResourceMgr.ur, x, y, null);
                 break;
             case DL:
-                g.drawImage(ResourceMgr.dl,x,y,null);
+                g.drawImage(ResourceMgr.dl, x, y, null);
                 break;
             case DR:
-                g.drawImage(ResourceMgr.dr,x,y,null);
+                g.drawImage(ResourceMgr.dr, x, y, null);
                 break;
         }
 
@@ -123,19 +123,23 @@ public class Tank {
         switch (e.getKeyCode()) {
             case VK_UP:
                 isUp = true;
+                isMoving = true;
                 break;
             case VK_LEFT:
                 isLeft = true;
+                isMoving = true;
                 break;
             case VK_RIGHT:
                 isRight = true;
+                isMoving = true;
                 break;
             case VK_DOWN:
                 isDown = true;
+                isMoving = true;
                 break;
         }
         setDir();
-        isMoving = true;
+
 
     }
 
@@ -154,7 +158,7 @@ public class Tank {
                 isDown = false;
                 break;
 
-            case VK_CONTROL:
+            case VK_F1:
                 fire();
                 break;
         }
@@ -163,7 +167,10 @@ public class Tank {
     }
 
     private void fire() {
-      Bullet bullet = new Bullet(x + TankW/2,y+TankH/2,dir,this.tankFrame);
-      this.tankFrame.bullets.add(bullet);
+//        System.out.println(String.format("%s %s %s %s %s %s", x, y,TankW,TankH,Bullet.BULLETW,Bullet.BULLETH));
+        int bX = x + TankW / 2 - Bullet.BULLETW / 2;
+        int bY = y + TankH / 2 - Bullet.BULLETH / 2;
+        Bullet bullet = new Bullet(bX, bY, dir, this.tankFrame);
+        this.tankFrame.bullets.add(bullet);
     }
 }
