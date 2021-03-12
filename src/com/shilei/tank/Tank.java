@@ -31,9 +31,33 @@ public class Tank {
         if (!isAlive && !isMainTank) {
             tankFrame.enemyTanks.remove(this);
         }
-        Color originColor = g.getColor();
-        g.drawImage(ResourceMgr.u,x,y,null);
-        g.setColor(originColor);
+        switch (dir) {
+            case Up:
+                g.drawImage(ResourceMgr.u,x,y,null);
+                break;
+            case Down:
+                g.drawImage(ResourceMgr.d,x,y,null);
+                break;
+            case Left:
+                g.drawImage(ResourceMgr.l,x,y,null);
+                break;
+            case Right:
+                g.drawImage(ResourceMgr.r,x,y,null);
+                break;
+            case UL:
+                g.drawImage(ResourceMgr.ul,x,y,null);
+                break;
+            case UR:
+                g.drawImage(ResourceMgr.ur,x,y,null);
+                break;
+            case DL:
+                g.drawImage(ResourceMgr.dl,x,y,null);
+                break;
+            case DR:
+                g.drawImage(ResourceMgr.dr,x,y,null);
+                break;
+        }
+
         //画完再移动
         move();
     }
