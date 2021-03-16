@@ -1,5 +1,6 @@
 package com.shilei.tank;
 
+import com.shilei.util.Audio;
 import com.shilei.util.RandomDir;
 
 import java.awt.*;
@@ -21,6 +22,7 @@ public class Tank {
     TankFrame tankFrame;
     boolean isAlive = true;
     Group group = Group.BAD;
+    Dir oldDir;
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         this.dir = dir;
@@ -74,6 +76,7 @@ public class Tank {
                 g.drawImage(ResourceMgr.dr, x, y, null);
                 break;
         }
+        oldDir = dir;
         //画完再移动
         move();
     }
@@ -113,8 +116,12 @@ public class Tank {
             x += TANK_SPEED;
         }
         //随机让敌方坦克发子弹！
-        if(group == Group.BAD && new Random().nextInt(10) > 8) {
+        if(group == Group.BAD && new Random().nextInt(100) > 98) {
             fire();
+        }
+        //敌方坦克随机方向
+        if(group == Group.BAD && new Random().nextInt(100) > 98) {
+            dir = RandomDir.randomDir();
         }
 
     }
@@ -201,6 +208,8 @@ public class Tank {
         int bY = y + TankH / 2 - Bullet.BULLETH / 2;
         Bullet bullet = new Bullet(bX, bY, dir, group, this.tankFrame);
         this.tankFrame.bullets.add(bullet);
+        if (group == Group.GOOD)
+            new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
     }
 
     public void die() {
