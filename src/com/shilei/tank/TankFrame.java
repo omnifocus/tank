@@ -16,6 +16,7 @@ public class TankFrame extends Frame {
     Tank tank = new Tank(x,y,Dir.Right,Group.GOOD,this);
     java.util.List<Bullet> bullets = new ArrayList<>();
     java.util.List<Tank> enemyTanks = new ArrayList<>();
+    java.util.List<Explode> explodes = new ArrayList<>();
 
     public TankFrame() {
         setSize(frameW, frameH);
@@ -56,7 +57,8 @@ public class TankFrame extends Frame {
         g.fillRect(0,0,frameW,frameH);
         g.setColor(Color.orange);
         g.drawString("当前子弹数量：" + bullets.size(),10,50);
-        g.drawString("当前敌方坦克数量：" + enemyTanks.size(),10,100);
+        g.drawString("当前敌方坦克数量：" + enemyTanks.size(),10,70);
+        g.drawString("当前爆炸数量：" + explodes.size(),10,90);
         tank.draw(g);
 
 //        final Iterator<Bullet> iterator = bullets.iterator();
@@ -81,6 +83,10 @@ public class TankFrame extends Frame {
         for (int i=0;i<bullets.size();i++)
             bullets.get(i).draw(g);
 
+        for (int i=0;i<explodes.size();i++) {
+            explodes.get(i).draw(g);
+        }
+
         g.setColor(originColor);
     }
 
@@ -94,7 +100,7 @@ public class TankFrame extends Frame {
         }
         Graphics gOffscreen = offScreenImage.getGraphics();
         Color c = gOffscreen.getColor();
-        gOffscreen.setColor(Color.BLACK);
+        gOffscreen.setColor(Color.WHITE);
         gOffscreen.fillRect(0,0,frameW,frameH);
         gOffscreen.setColor(c);
         paint(gOffscreen);

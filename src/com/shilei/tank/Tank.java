@@ -192,4 +192,8 @@ public class Tank {
         Bullet bullet = new Bullet(bX, bY, dir, group, this.tankFrame);
         this.tankFrame.bullets.add(bullet);
     }
+
+    public void die() {
+        isAlive = false;
+    }
 }

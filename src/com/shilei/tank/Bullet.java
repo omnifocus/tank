@@ -91,8 +91,13 @@ public class Bullet {
     public void collide(Tank tank) {
         if (group == tank.group) return;
         if (new Rectangle(x,y,BULLETW,BULLETH).intersects(new Rectangle(tank.x,tank.y,Tank.TankW,Tank.TankH))) {
-            isAlive = false;
-            tank.isAlive = false;
+            tf.explodes.add(new Explode(tank.x ,tank.y ,tf));
+            this.die();
+            tank.die();
         }
+    }
+
+    private void die() {
+        isAlive = false;
     }
 }
