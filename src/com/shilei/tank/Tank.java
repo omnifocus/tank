@@ -118,13 +118,30 @@ public class Tank {
         if (!isMoving)
             return;
 
-        if (x <= 0 || x >= TankFrame.frameW - Tank.TankW || y <= 30 || y >= TankFrame.frameH - Tank.TankH) {
-            Dir newdir = dir;
-            while (dir == newdir) {
-                newdir = RandomDir.randomDir();
+        if (group == Group.BAD) {
+
+
+            if (x <= 0) {
+                x = 0;
+                changeDir();
             }
-            dir = newdir;
+
+            if (x >= TankFrame.frameW - Tank.TankW) {
+                x = TankFrame.frameW - Tank.TankW;
+                changeDir();
+            }
+
+            if (y <= 30) {
+                y = 30;
+                changeDir();
+            }
+            if (y >= TankFrame.frameH - Tank.TankH) {
+                y = TankFrame.frameH - Tank.TankH;
+                changeDir();
+            }
+
         }
+
 
         if (dir == Dir.Up) {
             y -= TANK_SPEED;
@@ -246,5 +263,14 @@ public class Tank {
 
     public void die() {
         isAlive = false;
+    }
+
+
+    private void changeDir() {
+        Dir newdir = dir;
+        while (dir == newdir) {
+            newdir = RandomDir.randomDir();
+        }
+        dir = newdir;
     }
 }
