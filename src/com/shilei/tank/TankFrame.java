@@ -14,7 +14,7 @@ import java.util.Random;
 import static java.awt.event.KeyEvent.*;
 
 public class TankFrame extends Frame {
-    public static final int frameW = 800, frameH = 500;
+    public static final int frameW = 1200, frameH = 600;
     int x = 300, y = 200;
     Tank tank = new Tank(x,y,Dir.Right,Group.GOOD,this);
     java.util.List<Bullet> bullets = new ArrayList<>();

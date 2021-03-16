@@ -74,7 +74,6 @@ public class Tank {
                 g.drawImage(ResourceMgr.dr, x, y, null);
                 break;
         }
-
         //画完再移动
         move();
     }
@@ -84,8 +83,12 @@ public class Tank {
         if (!isMoving)
             return;
 
-        if (x <= 0 || x >= TankFrame.frameW - Tank.TankW || y <= 25 || y >= TankFrame.frameH - Tank.TankH) {
-            dir = RandomDir.randomDir();
+        if (x <= 0 || x >= TankFrame.frameW - Tank.TankW || y <= 30 || y >= TankFrame.frameH - Tank.TankH) {
+            Dir newdir = dir;
+            while (dir == newdir) {
+                newdir = RandomDir.randomDir();
+            }
+            dir = newdir;
         }
 
         if (dir == Dir.Up) {

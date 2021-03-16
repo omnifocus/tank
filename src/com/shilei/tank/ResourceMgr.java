@@ -1,5 +1,7 @@
 package com.shilei.tank;
 
+import com.shilei.util.ImageUtil;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -11,23 +13,23 @@ public class ResourceMgr {
 
     static  {
         try {
-            u = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("tankU.gif"));
-            d = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("tankD.gif"));
-            l = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("tankL.gif"));
-            r = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("tankR.gif"));
-            ul = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("tankLU.gif"));
-            ur = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("tankRU.gif"));
-            dl = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("tankLD.gif"));
-            dr = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("tankRD.gif"));
+            u = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("BadTank1.png"));
+            d = ImageUtil.rotateImage(u,180);
+            l = ImageUtil.rotateImage(u,-90);
+            r = ImageUtil.rotateImage(u,90);
+            ul = ImageUtil.rotateImage(u,-45);
+            ur = ImageUtil.rotateImage(u,45);
+            dl = ImageUtil.rotateImage(u,-135);
+            dr = ImageUtil.rotateImage(u,135);
 
-            bu = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("bulletU.gif"));
-            bd = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("bulletD.gif"));
-            bl = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("bulletL.gif"));
-            br = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("bulletR.gif"));
-            bul = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("missileLU.gif"));
-            bur = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("missileRU.gif"));
-            bdl = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("missileLD.gif"));
-            bdr = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("missileRD.gif"));
+            bu = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("bulletU.png"));
+            bd = ImageUtil.rotateImage(bu,180);
+            bl = ImageUtil.rotateImage(bu,-90);
+            br = ImageUtil.rotateImage(bu,90);
+            bul = ImageUtil.rotateImage(bu,-45);
+            bur = ImageUtil.rotateImage(bu,45);
+            bdl = ImageUtil.rotateImage(bu,-135);
+            bdr = ImageUtil.rotateImage(bu,135);
 
             for (int i=0;i<=15;i++) {
                 explodes[i] = ImageIO.read(Main.class.getClassLoader().getResourceAsStream("e"+(i+1)+".gif"));

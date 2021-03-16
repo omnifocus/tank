@@ -1,5 +1,7 @@
 package com.shilei.tank;
 
+import com.shilei.util.Audio;
+
 import java.awt.*;
 
 public class Explode {
@@ -13,6 +15,7 @@ public class Explode {
         this.x = x;
         this.y = y;
         this.tf = tf;
+//        new Audio("audio/explode.wav").play();
     }
 
     public void draw(Graphics g) {
