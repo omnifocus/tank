@@ -15,7 +15,7 @@ public class Tank {
     boolean isMoving = true;
     public static final int TankW = ResourceMgr.u.getWidth();
     public static final int TankH = ResourceMgr.u.getHeight();
-    public static final int TANK_SPEED = 1;
+    public static final int TANK_SPEED = 5;
     TankFrame tankFrame;
     boolean isAlive = true;
     Group group = Group.BAD;

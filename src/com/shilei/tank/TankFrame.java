@@ -7,6 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -26,7 +27,8 @@ public class TankFrame extends Frame {
         setTitle("TankWar");
 
         for (int i=0;i<10;i++) {
-            Tank tank = new Tank(i*60, 100,Dir.Down,this);
+            int random = new Random().nextInt(Dir.values().length);
+            Tank tank = new Tank(i*60, 100,Dir.values()[random],this);
             enemyTanks.add(tank);
         }
 
