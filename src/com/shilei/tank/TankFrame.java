@@ -28,11 +28,6 @@ public class TankFrame extends Frame {
         setResizable(false);
         setTitle("TankWar");
 
-        for (int i=0;i<10;i++) {
-
-            Tank tank = new Tank(i*60, 100, RandomDir.randomDir(),this);
-            enemyTanks.add(tank);
-        }
 
         addWindowListener(new WindowAdapter() {
             @Override
