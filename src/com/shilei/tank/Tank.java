@@ -118,30 +118,7 @@ public class Tank {
         if (!isMoving)
             return;
 
-        if (group == Group.BAD) {
-
-
-            if (x <= 0) {
-                x = 0;
-                changeDir();
-            }
-
-            if (x >= TankFrame.frameW - Tank.TankW) {
-                x = TankFrame.frameW - Tank.TankW;
-                changeDir();
-            }
-
-            if (y <= 30) {
-                y = 30;
-                changeDir();
-            }
-            if (y >= TankFrame.frameH - Tank.TankH) {
-                y = TankFrame.frameH - Tank.TankH;
-                changeDir();
-            }
-
-        }
-
+        boundCheck();
 
         if (dir == Dir.Up) {
             y -= TANK_SPEED;
@@ -171,6 +148,34 @@ public class Tank {
         //敌方坦克随机方向
         if(group == Group.BAD && new Random().nextInt(100) > 98) {
             dir = RandomDir.randomDir();
+        }
+
+    }
+
+    private void boundCheck() {
+
+        if (group == Group.BAD) {
+
+
+            if (x <= 0) {
+                x = 0;
+                changeDir();
+            }
+
+            if (x >= TankFrame.frameW - Tank.TankW) {
+                x = TankFrame.frameW - Tank.TankW;
+                changeDir();
+            }
+
+            if (y <= 30) {
+                y = 30;
+                changeDir();
+            }
+            if (y >= TankFrame.frameH - Tank.TankH) {
+                y = TankFrame.frameH - Tank.TankH;
+                changeDir();
+            }
+
         }
 
     }
