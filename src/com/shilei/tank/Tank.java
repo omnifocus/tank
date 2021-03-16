@@ -1,5 +1,7 @@
 package com.shilei.tank;
 
+import com.shilei.util.RandomDir;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
@@ -81,6 +83,11 @@ public class Tank {
         //移动状态下画出来才有效果
         if (!isMoving)
             return;
+
+        if (x <= 0 || x >= TankFrame.frameW - Tank.TankW || y <= 25 || y >= TankFrame.frameH - Tank.TankH) {
+            dir = RandomDir.randomDir();
+        }
+
         if (dir == Dir.Up) {
             y -= TANK_SPEED;
         } else if (dir == Dir.Down) {

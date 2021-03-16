@@ -1,5 +1,7 @@
 package com.shilei.tank;
 
+import com.shilei.util.RandomDir;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -27,8 +29,8 @@ public class TankFrame extends Frame {
         setTitle("TankWar");
 
         for (int i=0;i<10;i++) {
-            int random = new Random().nextInt(Dir.values().length);
-            Tank tank = new Tank(i*60, 100,Dir.values()[random],this);
+
+            Tank tank = new Tank(i*60, 100, RandomDir.randomDir(),this);
             enemyTanks.add(tank);
         }
 
