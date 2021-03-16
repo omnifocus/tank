@@ -2,6 +2,7 @@ package com.shilei.tank;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 import static java.awt.event.KeyEvent.*;
 import static java.awt.event.KeyEvent.VK_DOWN;
@@ -11,24 +12,38 @@ public class Tank {
     Dir dir = Dir.Down;
     int x = 20, y = 30;
     //增加是否移动属性
-    boolean isMoving;
+    boolean isMoving = true;
     public static final int TankW = ResourceMgr.u.getWidth();
     public static final int TankH = ResourceMgr.u.getHeight();
-    public static final int TANK_SPEED = 5;
+    public static final int TANK_SPEED = 1;
     TankFrame tankFrame;
     boolean isAlive = true;
-    boolean isMainTank;
+    Group group = Group.BAD;
 
-    public Tank(int x, int y, Dir dir, boolean isMainTank, TankFrame tankFrame) {
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         this.dir = dir;
         this.x = x;
         this.y = y;
-        this.isMainTank = isMainTank;
+        this.group = group;
+        this.tankFrame = tankFrame;
+    }
+
+    /**
+     * 默认生成bad tank
+     * @param x
+     * @param y
+     * @param dir
+     * @param tankFrame
+     */
+    public Tank(int x, int y, Dir dir, TankFrame tankFrame) {
+        this.dir = dir;
+        this.x = x;
+        this.y = y;
         this.tankFrame = tankFrame;
     }
 
     void draw(Graphics g) {
-        if (!isAlive && !isMainTank) {
+        if (!isAlive && group == Group.BAD) {
             tankFrame.enemyTanks.remove(this);
         }
         switch (dir) {
@@ -86,6 +101,10 @@ public class Tank {
         } else if (dir == Dir.DR) {
             y += TANK_SPEED;
             x += TANK_SPEED;
+        }
+        //随机让敌方坦克发子弹！
+        if(group == Group.BAD && new Random().nextInt(10) > 8) {
+            fire();
         }
 
     }
@@ -170,7 +189,7 @@ public class Tank {
 //        System.out.println(String.format("%s %s %s %s %s %s", x, y,TankW,TankH,Bullet.BULLETW,Bullet.BULLETH));
         int bX = x + TankW / 2 - Bullet.BULLETW / 2;
         int bY = y + TankH / 2 - Bullet.BULLETH / 2;
-        Bullet bullet = new Bullet(bX, bY, dir, this.tankFrame);
+        Bullet bullet = new Bullet(bX, bY, dir, group, this.tankFrame);
         this.tankFrame.bullets.add(bullet);
     }
 }

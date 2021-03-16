@@ -13,7 +13,7 @@ import static java.awt.event.KeyEvent.*;
 public class TankFrame extends Frame {
     public static final int frameW = 800, frameH = 500;
     int x = 300, y = 200;
-    Tank tank = new Tank(x,y,Dir.Right,true,this);
+    Tank tank = new Tank(x,y,Dir.Right,Group.GOOD,this);
     java.util.List<Bullet> bullets = new ArrayList<>();
     java.util.List<Tank> enemyTanks = new ArrayList<>();
 
@@ -25,7 +25,7 @@ public class TankFrame extends Frame {
         setTitle("TankWar");
 
         for (int i=0;i<10;i++) {
-            Tank tank = new Tank(i*60, 100,Dir.Down,false,this);
+            Tank tank = new Tank(i*60, 100,Dir.Down,this);
             enemyTanks.add(tank);
         }
 
@@ -56,6 +56,7 @@ public class TankFrame extends Frame {
         g.fillRect(0,0,frameW,frameH);
         g.setColor(Color.orange);
         g.drawString("当前子弹数量：" + bullets.size(),10,50);
+        g.drawString("当前敌方坦克数量：" + enemyTanks.size(),10,100);
         tank.draw(g);
 
 //        final Iterator<Bullet> iterator = bullets.iterator();

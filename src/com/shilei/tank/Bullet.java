@@ -14,11 +14,13 @@ public class Bullet {
     private Dir dir;
     private TankFrame tf;
     boolean isAlive = true;
+    private Group group = Group.BAD;
 
-    public Bullet(int x, int y, Dir dir,TankFrame tf) {
+    public Bullet(int x, int y, Dir dir,Group group,TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tf = tf;
     }
 
@@ -87,6 +89,7 @@ public class Bullet {
 
 
     public void collide(Tank tank) {
+        if (group == tank.group) return;
         if (new Rectangle(x,y,BULLETW,BULLETH).intersects(new Rectangle(tank.x,tank.y,Tank.TankW,Tank.TankH))) {
             isAlive = false;
             tank.isAlive = false;
