@@ -5,6 +5,7 @@ import com.shilei.util.RandomDir;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Base64;
 import java.util.Random;
 
 import static java.awt.event.KeyEvent.*;
@@ -22,8 +23,9 @@ public class Tank {
     TankFrame tankFrame;
     boolean isAlive = true;
     Group group = Group.BAD;
-    Dir oldDir;
 
+    int step;
+    int threshold = 2;
     public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         this.dir = dir;
         this.x = x;
@@ -50,35 +52,65 @@ public class Tank {
         if (!isAlive && group == Group.BAD) {
             tankFrame.enemyTanks.remove(this);
         }
-        switch (dir) {
-            case Up:
-                g.drawImage(ResourceMgr.u, x, y, null);
-                break;
-            case Down:
-                g.drawImage(ResourceMgr.d, x, y, null);
-                break;
-            case Left:
-                g.drawImage(ResourceMgr.l, x, y, null);
-                break;
-            case Right:
-                g.drawImage(ResourceMgr.r, x, y, null);
-                break;
-            case UL:
-                g.drawImage(ResourceMgr.ul, x, y, null);
-                break;
-            case UR:
-                g.drawImage(ResourceMgr.ur, x, y, null);
-                break;
-            case DL:
-                g.drawImage(ResourceMgr.dl, x, y, null);
-                break;
-            case DR:
-                g.drawImage(ResourceMgr.dr, x, y, null);
-                break;
+        if (group == Group.BAD) {
+            switch (dir) {
+                case Up:
+                    g.drawImage( step % threshold == 0 ? ResourceMgr.u : ResourceMgr.u2, x, y, null);
+                    break;
+                case Down:
+                    g.drawImage( step % threshold == 0 ? ResourceMgr.d : ResourceMgr.d2, x, y, null);
+                    break;
+                case Left:
+                    g.drawImage( step % threshold == 0 ? ResourceMgr.l : ResourceMgr.l2, x, y, null);
+                    break;
+                case Right:
+                    g.drawImage( step % threshold == 0 ? ResourceMgr.r : ResourceMgr.r2, x, y, null);
+                    break;
+                case UL:
+                    g.drawImage( step % threshold == 0 ? ResourceMgr.ul: ResourceMgr.ul2 , x, y, null);
+                    break;
+                case UR:
+                    g.drawImage( step % threshold == 0 ? ResourceMgr.ur : ResourceMgr.ur2, x, y, null);
+                    break;
+                case DL:
+                    g.drawImage( step % threshold == 0 ? ResourceMgr.dl : ResourceMgr.dl2, x, y, null);
+                    break;
+                case DR:
+                    g.drawImage( step % threshold == 0 ? ResourceMgr.dr : ResourceMgr.dr2, x, y, null);
+                    break;
+            }
+        } else {
+            switch (dir) {
+                case Up:
+                    g.drawImage( step % threshold == 0 ?  ResourceMgr.mu : ResourceMgr.mu2, x, y, null);
+                    break;
+                case Down:
+                    g.drawImage(step % threshold == 0 ?  ResourceMgr.md : ResourceMgr.md2, x, y, null);
+                    break;
+                case Left:
+                    g.drawImage(step % threshold == 0 ? ResourceMgr.ml : ResourceMgr.ml2, x, y, null);
+                    break;
+                case Right:
+                    g.drawImage(step % threshold == 0 ? ResourceMgr.mr : ResourceMgr.mr2, x, y, null);
+                    break;
+                case UL:
+                    g.drawImage(step % threshold == 0 ? ResourceMgr.mul : ResourceMgr.mul2, x, y, null);
+                    break;
+                case UR:
+                    g.drawImage(step % threshold == 0 ? ResourceMgr.mur : ResourceMgr.mur2, x, y, null);
+                    break;
+                case DL:
+                    g.drawImage(step % threshold == 0 ? ResourceMgr.mdl : ResourceMgr.mdl2, x, y, null);
+                    break;
+                case DR:
+                    g.drawImage(step % threshold == 0 ? ResourceMgr.mdr : ResourceMgr.mdr2, x, y, null);
+                    break;
+            }
         }
-        oldDir = dir;
         //画完再移动
         move();
+        step++;
+        if (step == 2) step = 0;
     }
 
     private void move() {
