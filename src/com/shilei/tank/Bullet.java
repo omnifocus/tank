@@ -15,6 +15,7 @@ public class Bullet {
     private TankFrame tf;
     boolean isAlive = true;
     private Group group = Group.BAD;
+    Rectangle rectangle = new Rectangle(x,y,BULLETW,BULLETH);
 
     public Bullet(int x, int y, Dir dir,Group group,TankFrame tf) {
         this.x = x;
@@ -54,6 +55,8 @@ public class Bullet {
                 break;
         }
         move();
+        rectangle.x = x;
+        rectangle.y = y;
     }
 
     private void move() {
@@ -90,7 +93,7 @@ public class Bullet {
 
     public void collide(Tank tank) {
         if (group == tank.group) return;
-        if (new Rectangle(x,y,BULLETW,BULLETH).intersects(new Rectangle(tank.x,tank.y,Tank.TankW,Tank.TankH))) {
+        if (this.rectangle.intersects(tank.rectangle)) {
             tf.explodes.add(new Explode(tank.x ,tank.y ,tf));
             this.die();
             tank.die();

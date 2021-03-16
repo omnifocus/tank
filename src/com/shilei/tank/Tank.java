@@ -26,6 +26,7 @@ public class Tank {
 
     int step;
     int threshold = 2;
+    Rectangle rectangle = new Rectangle(x,y,TankW,TankH);
     public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         this.dir = dir;
         this.x = x;
@@ -111,6 +112,8 @@ public class Tank {
         move();
         step++;
         if (step == 2) step = 0;
+        rectangle.x = x;
+        rectangle.y = y;
     }
 
     private void move() {
@@ -159,21 +162,17 @@ public class Tank {
 
             if (x <= 0) {
                 x = 0;
-                changeDir();
             }
 
             if (x >= TankFrame.frameW - Tank.TankW) {
                 x = TankFrame.frameW - Tank.TankW;
-                changeDir();
             }
 
             if (y <= 30) {
                 y = 30;
-                changeDir();
             }
             if (y >= TankFrame.frameH - Tank.TankH) {
                 y = TankFrame.frameH - Tank.TankH;
-                changeDir();
             }
 
         }
@@ -271,11 +270,4 @@ public class Tank {
     }
 
 
-    private void changeDir() {
-        Dir newdir = dir;
-        while (dir == newdir) {
-            newdir = RandomDir.randomDir();
-        }
-        dir = newdir;
-    }
 }
