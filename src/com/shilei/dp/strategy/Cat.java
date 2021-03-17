@@ -1,13 +1,15 @@
 package com.shilei.dp.strategy;
 
-public class Cat implements Comparable{
+public class Cat {
     int weight;
+    int food;
 
-    public Cat(int weight) {
+    public Cat(int weight,int food) {
         this.weight = weight;
+        this.food = food;
     }
 
-    @Override
+//    @Override
     public int compareTo(Object o) {
         Cat c = (Cat) o;
         return weight-c.weight;
@@ -17,6 +19,7 @@ public class Cat implements Comparable{
     public String toString() {
         return "Cat{" +
                 "weight=" + weight +
+                ", food=" + food +
                 '}';
     }
 }
