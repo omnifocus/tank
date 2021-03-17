@@ -71,4 +71,8 @@ public class ResourceMgr {
             e.printStackTrace();
         }
     }
+
+    private ResourceMgr(){}
+
+
 }
