@@ -29,13 +29,9 @@ public class SortSomething {
 //        System.out.println(Arrays.toString(a));
 
         Cat[] cs = {new Cat(1,3),new Cat(5,6), new Cat(3,1)};
-        sort(cs, new Comparator<Cat>() {
-
-            @Override
-            public int compare(Cat o1, Cat o2) {
-                return o1.food - o2.food;
-            }
-        });
+        //想怎么排就怎么排
+        sort(cs, new CatFoodComparator());
+        sort(cs, new CatWeightComparator());
         System.out.println(Arrays.toString(cs));
     }
 }
