@@ -4,6 +4,7 @@ import com.shilei.tank.Bullet;
 import com.shilei.tank.Group;
 import com.shilei.tank.Tank;
 import com.shilei.tank.TankFrame;
+import com.shilei.tank.dp.abstractfactory2.BaseTank;
 import com.shilei.util.Audio;
 
 public class FireStrategyDefaultDir implements FireStrategy{
@@ -14,7 +15,7 @@ public class FireStrategyDefaultDir implements FireStrategy{
         return defaultDir;
     }
     @Override
-    public void fireWithTank(Tank tank) {
+    public void fireWithTank(BaseTank tank) {
         int bX = tank.x + Tank.TankW / 2 - Bullet.BULLETW / 2;
         int bY = tank.y + Tank.TankH / 2 - Bullet.BULLETH / 2;
         TankFrame.abstractFactory.genBullet(bX,bY,tank.dir,tank.group,tank.tankFrame);

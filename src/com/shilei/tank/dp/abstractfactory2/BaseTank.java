@@ -1,6 +1,8 @@
 package com.shilei.tank.dp.abstractfactory2;
 
+import com.shilei.tank.Dir;
 import com.shilei.tank.Group;
+import com.shilei.tank.TankFrame;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -10,6 +12,8 @@ public abstract class BaseTank {
     public Group group = Group.BAD;
     public Rectangle rectangle;
     public int x, y;
+    public Dir dir;
+    public TankFrame tankFrame;
 
     public abstract void draw(Graphics g);
 

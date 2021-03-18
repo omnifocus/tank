@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.lang.reflect.Method;
 import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,7 +28,12 @@ public class TankFrame extends Frame {
 
     static {
         try {
-            abstractFactory = new DefaultFactory();
+//            abstractFactory = new DefaultFactory();
+//            abstractFactory = new RectFactory();
+            Class clazz = Class.forName(PropertyMgr.get("factory"));
+            Method method = clazz.getMethod("getInstance");
+            abstractFactory = (AbstractFactory) method.invoke(clazz);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

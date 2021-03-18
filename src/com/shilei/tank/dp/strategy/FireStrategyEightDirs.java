@@ -1,6 +1,7 @@
 package com.shilei.tank.dp.strategy;
 
 import com.shilei.tank.*;
+import com.shilei.tank.dp.abstractfactory2.BaseTank;
 import com.shilei.util.Audio;
 
 public class FireStrategyEightDirs implements FireStrategy{
@@ -11,7 +12,7 @@ public class FireStrategyEightDirs implements FireStrategy{
         return eightDirs;
     }
     @Override
-    public void fireWithTank(Tank tank) {
+    public void fireWithTank(BaseTank tank) {
         int bX = tank.x + Tank.TankW / 2 - Bullet.BULLETW / 2;
         int bY = tank.y + Tank.TankH / 2 - Bullet.BULLETH / 2;
         for (Dir dir : Dir.values()) {

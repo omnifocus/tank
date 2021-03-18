@@ -1,7 +1,8 @@
 package com.shilei.tank.dp.strategy;
 
 import com.shilei.tank.Tank;
+import com.shilei.tank.dp.abstractfactory2.BaseTank;
 
 public interface FireStrategy {
-    void fireWithTank(Tank tank);
+    void fireWithTank(BaseTank tank);
 }

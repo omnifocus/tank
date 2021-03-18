@@ -1,6 +1,6 @@
-package com.shilei.tank;
+package com.shilei.tank.dp.abstractfactory2;
 
-import com.shilei.tank.dp.abstractfactory2.BaseTank;
+import com.shilei.tank.*;
 import com.shilei.tank.dp.strategy.FireStrategy;
 import com.shilei.util.RandomDir;
 
@@ -12,9 +12,9 @@ import java.util.Random;
 
 import static java.awt.event.KeyEvent.*;
 
-public class Tank extends BaseTank {
+public class RectTank extends BaseTank {
     boolean isUp, isDown, isLeft, isRight;
-
+    public Dir dir = Dir.Down;
     //增加是否移动属性
     boolean isMoving = true;
 
@@ -46,7 +46,7 @@ public class Tank extends BaseTank {
     int threshold = 2;
 
 
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
+    public RectTank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         this.dir = dir;
         this.x = x;
         this.y = y;
@@ -61,61 +61,16 @@ public class Tank extends BaseTank {
         if (!isAlive && group == Group.BAD) {
             tankFrame.enemyTanks.remove(this);
         }
+        Color c = g.getColor();
+
         if (group == Group.BAD) {
-            switch (dir) {
-                case Up:
-                    g.drawImage(ResourceMgr.u ,x,  y, null);
-                    break;
-                case Down:
-                    g.drawImage( ResourceMgr.d,x,y, null);
-                    break;
-                case Left:
-                    g.drawImage( ResourceMgr.l,x,  y, null);
-                    break;
-                case Right:
-                    g.drawImage( ResourceMgr.r,x,  y, null);
-                    break;
-                case UL:
-                    g.drawImage( ResourceMgr.ul,x, y, null);
-                    break;
-                case UR:
-                    g.drawImage( ResourceMgr.ur,x, y, null);
-                    break;
-                case DL:
-                    g.drawImage( ResourceMgr.dl,x, y, null);
-                    break;
-                case DR:
-                    g.drawImage( ResourceMgr.dr,x,y, null);
-                    break;
-            }
+            g.setColor(Color.BLUE);
+            g.fillRect(x,y,TankW,TankH);
         } else {
-            switch (dir) {
-                case Up:
-                    g.drawImage( ResourceMgr.mu,x, y, null);
-                    break;
-                case Down:
-                    g.drawImage( ResourceMgr.md,x, y, null);
-                    break;
-                case Left:
-                    g.drawImage(ResourceMgr.ml,x,y, null);
-                    break;
-                case Right:
-                    g.drawImage(ResourceMgr.mr,x, y, null);
-                    break;
-                case UL:
-                    g.drawImage(ResourceMgr.mul,x, y, null);
-                    break;
-                case UR:
-                    g.drawImage(ResourceMgr.mur,x, y, null);
-                    break;
-                case DL:
-                    g.drawImage(ResourceMgr.mdl,x, y, null);
-                    break;
-                case DR:
-                    g.drawImage(ResourceMgr.mdr,x, y, null);
-                    break;
-            }
+           g.setColor(Color.RED);
+           g.fillRect(x,y,TankW,TankH);
         }
+        g.setColor(c);
         //画完再移动
         move();
         step++;
@@ -173,15 +128,15 @@ public class Tank extends BaseTank {
                 x = 0;
             }
 
-            if (x >= TankFrame.frameW - Tank.TankW) {
-                x = TankFrame.frameW - Tank.TankW;
+            if (x >= TankFrame.frameW - RectTank.TankW) {
+                x = TankFrame.frameW - RectTank.TankW;
             }
 
             if (y <= 30) {
                 y = 30;
             }
-            if (y >= TankFrame.frameH - Tank.TankH) {
-                y = TankFrame.frameH - Tank.TankH;
+            if (y >= TankFrame.frameH - RectTank.TankH) {
+                y = TankFrame.frameH - RectTank.TankH;
             }
 
         }
