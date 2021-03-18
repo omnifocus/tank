@@ -23,7 +23,7 @@ public class PropertyMgr {
 
     }
 
-    static String get(String key) {
+    public static String get(String key) {
         return (String)(props.get(key));
     }
 }

@@ -1,5 +1,6 @@
 package com.shilei.tank;
 
+import com.shilei.tank.dp.abstractfactory2.*;
 import com.shilei.util.RandomDir;
 
 import java.awt.*;
@@ -7,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.security.spec.ECField;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -16,10 +18,20 @@ import static java.awt.event.KeyEvent.*;
 public class TankFrame extends Frame {
     public static final int frameW = 1200, frameH = 600;
     int x = 300, y = 200;
-    Tank tank = new Tank(x,y,Dir.Right,Group.GOOD,this);
-    public java.util.List<Bullet> bullets = new ArrayList<>();
-    public java.util.List<Tank> enemyTanks = new ArrayList<>();
-    public java.util.List<Explode> explodes = new ArrayList<>();
+    BaseTank tank  = abstractFactory.genTank(x,y,Dir.Right,Group.GOOD,this);
+    public java.util.List<BaseBullet> bullets = new ArrayList<>();
+    public java.util.List<BaseTank> enemyTanks = new ArrayList<>();
+    public java.util.List<BaseExplode> explodes = new ArrayList<>();
+
+    public static AbstractFactory abstractFactory;
+
+    static {
+        try {
+            abstractFactory = new DefaultFactory();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public TankFrame() {
         setSize(frameW, frameH);

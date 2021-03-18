@@ -1,9 +1,7 @@
 package com.shilei.tank;
 
-import com.shilei.tank.dp.abstractfactory.AbstractFactory;
-import com.shilei.tank.dp.abstractfactory.AbstractImage;
+import com.shilei.tank.dp.abstractfactory2.BaseTank;
 import com.shilei.tank.dp.strategy.FireStrategy;
-import com.shilei.util.Audio;
 import com.shilei.util.RandomDir;
 
 import java.awt.*;
@@ -13,13 +11,10 @@ import java.lang.reflect.Method;
 import java.util.Random;
 
 import static java.awt.event.KeyEvent.*;
-import static java.awt.event.KeyEvent.VK_DOWN;
 
-public class Tank {
+public class Tank extends BaseTank {
     boolean isUp, isDown, isLeft, isRight;
     public Dir dir = Dir.Down;
-    public int x = 20;
-    public int y = 30;
     //增加是否移动属性
     boolean isMoving = true;
 
@@ -29,10 +24,9 @@ public class Tank {
     public Group group = Group.BAD;
     public static FireStrategy fireStrategyGoodTank;
     public static FireStrategy fireStrategyBadTank;
-    public static AbstractFactory abstractFactory;
 
-    public static  int TankW;
-    public static  int TankH;
+    public static  int TankW = ResourceMgr.u.getWidth();
+    public static  int TankH = ResourceMgr.u.getHeight();
 
     static {
         try {
@@ -44,12 +38,6 @@ public class Tank {
             Method method2 =  clazz2.getMethod("getInstance");
             fireStrategyBadTank = (FireStrategy) method2.invoke(clazz2);
 
-            Class clazz3  =  Class.forName(PropertyMgr.get("factory"));
-            Method method3 =  clazz3.getMethod("getInstance");
-            abstractFactory  = (AbstractFactory) method3.invoke(clazz3);
-
-            TankW = abstractFactory.createTankImg().width();
-            TankH = abstractFactory.createTankImg().height();
 
         } catch (ClassNotFoundException | NoSuchMethodException  | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
@@ -58,85 +46,75 @@ public class Tank {
 
     int step;
     int threshold = 2;
-    Rectangle rectangle = new Rectangle(x,y,TankW,TankH);
+
+
     public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
         this.dir = dir;
         this.x = x;
         this.y = y;
         this.group = group;
         this.tankFrame = tankFrame;
+        //为啥不能放外面
+        rectangle = new  Rectangle(x,y,TankW,TankH);
     }
 
-    /**
-     * 默认生成bad tank
-     * @param x
-     * @param y
-     * @param dir
-     * @param tankFrame
-     */
-    public Tank(int x, int y, Dir dir, TankFrame tankFrame) {
-        this.dir = dir;
-        this.x = x;
-        this.y = y;
-        this.tankFrame = tankFrame;
-    }
-
-    void draw(Graphics g) {
+    @Override
+    public void draw(Graphics g) {
         if (!isAlive && group == Group.BAD) {
             tankFrame.enemyTanks.remove(this);
         }
         if (group == Group.BAD) {
             switch (dir) {
                 case Up:
-                    g.drawImage(abstractFactory.createTankImg().u() ,x,  y, null);
+                    g.drawImage(ResourceMgr.u ,x,  y, null);
                     break;
                 case Down:
-                    g.drawImage( abstractFactory.createTankImg().d() ,x,y, null);
+                    g.drawImage( ResourceMgr.d,x,y, null);
                     break;
                 case Left:
-                    g.drawImage( abstractFactory.createTankImg().l(),x,  y, null);
+                    g.drawImage( ResourceMgr.l,x,  y, null);
                     break;
                 case Right:
-                    g.drawImage( abstractFactory.createTankImg().r(),x,  y, null);
+                    g.drawImage( ResourceMgr.r,x,  y, null);
                     break;
                 case UL:
-                    g.drawImage( abstractFactory.createTankImg().ul(),x, y, null);
+                    g.drawImage( ResourceMgr.ul,x, y, null);
                     break;
                 case UR:
-                    g.drawImage( abstractFactory.createTankImg().ur(),x, y, null);
+                    g.drawImage( ResourceMgr.ur,x, y, null);
                     break;
                 case DL:
-                    g.drawImage( abstractFactory.createTankImg().dl(),x, y, null);
+                    g.drawImage( ResourceMgr.dl,x, y, null);
                     break;
                 case DR:
-                    g.drawImage( abstractFactory.createTankImg().dr(),x,y, null);
+                    g.drawImage( ResourceMgr.dr,x,y, null);
                     break;
             }
         } else {
             switch (dir) {
                 case Up:
-                    g.drawImage( abstractFactory.createTankImg().u(),x, y, null);
+                    g.drawImage( ResourceMgr.mu,x, y, null);
                     break;
                 case Down:
-                    g.drawImage( abstractFactory.createTankImg().d(),x, y, null);
+                    g.drawImage( ResourceMgr.md,x, y, null);
                     break;
                 case Left:
-                    g.drawImage(abstractFactory.createTankImg().l(),x,y, null);
+                    g.drawImage(ResourceMgr.ml,x,y, null);
                     break;
                 case Right:
-                    g.drawImage(abstractFactory.createTankImg().r(),x, y, null);
+                    g.drawImage(ResourceMgr.mr,x, y, null);
                     break;
                 case UL:
-                    g.drawImage(abstractFactory.createTankImg().ul(),x, y, null);
+                    g.drawImage(ResourceMgr.mul,x, y, null);
                     break;
                 case UR:
-                    g.drawImage(abstractFactory.createTankImg().ur(),x, y, null);
+                    g.drawImage(ResourceMgr.mur,x, y, null);
                     break;
                 case DL:
-                    g.drawImage(abstractFactory.createTankImg().dl(),x, y, null);
+                    g.drawImage(ResourceMgr.mdl,x, y, null);
                     break;
                 case DR:
-                    g.drawImage(abstractFactory.createTankImg().dr(),x, y, null);
+                    g.drawImage(ResourceMgr.mdr,x, y, null);
                     break;
             }
         }
