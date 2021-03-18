@@ -17,9 +17,9 @@ public class TankFrame extends Frame {
     public static final int frameW = 1200, frameH = 600;
     int x = 300, y = 200;
     Tank tank = new Tank(x,y,Dir.Right,Group.GOOD,this);
-    java.util.List<Bullet> bullets = new ArrayList<>();
-    java.util.List<Tank> enemyTanks = new ArrayList<>();
-    java.util.List<Explode> explodes = new ArrayList<>();
+    public java.util.List<Bullet> bullets = new ArrayList<>();
+    public java.util.List<Tank> enemyTanks = new ArrayList<>();
+    public java.util.List<Explode> explodes = new ArrayList<>();
 
     public TankFrame() {
         setSize(frameW, frameH);

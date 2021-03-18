@@ -1,11 +1,12 @@
 package com.shilei.tank;
 
+import com.shilei.tank.dp.strategy.FireStrategy;
 import com.shilei.util.Audio;
 import com.shilei.util.RandomDir;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Base64;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 import static java.awt.event.KeyEvent.*;
@@ -13,16 +14,28 @@ import static java.awt.event.KeyEvent.VK_DOWN;
 
 public class Tank {
     boolean isUp, isDown, isLeft, isRight;
-    Dir dir = Dir.Down;
-    int x = 20, y = 30;
+    public Dir dir = Dir.Down;
+    public int x = 20;
+    public int y = 30;
     //增加是否移动属性
     boolean isMoving = true;
     public static final int TankW = ResourceMgr.u.getWidth();
     public static final int TankH = ResourceMgr.u.getHeight();
     public static final int TANK_SPEED = 5;
-    TankFrame tankFrame;
+    public TankFrame tankFrame;
     boolean isAlive = true;
-    Group group = Group.BAD;
+    public Group group = Group.BAD;
+    public static FireStrategy fireStrategy;
+    public static FireStrategy fireStrategyDefault;
+
+    static {
+        try {
+            fireStrategy = (FireStrategy) Class.forName(PropertyMgr.get("FireStrategy")).getConstructor().newInstance();
+            fireStrategyDefault = (FireStrategy) Class.forName(PropertyMgr.get("FireStrategyDefault")).getConstructor().newInstance();
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
 
     int step;
     int threshold = 2;
@@ -146,7 +159,8 @@ public class Tank {
         }
         //随机让敌方坦克发子弹！
         if(group == Group.BAD && new Random().nextInt(100) > 98) {
-            fire();
+            //子弹只能发射跟随坦克方向的子弹
+            fire(fireStrategyDefault);
         }
         //敌方坦克随机方向
         if(group == Group.BAD && new Random().nextInt(100) > 98) {
@@ -248,21 +262,15 @@ public class Tank {
                 break;
 
             case VK_F1:
-                fire();
+                fire(fireStrategy);
                 break;
         }
         setDir();
         isMoving = false;
     }
 
-    private void fire() {
-//        System.out.println(String.format("%s %s %s %s %s %s", x, y,TankW,TankH,Bullet.BULLETW,Bullet.BULLETH));
-        int bX = x + TankW / 2 - Bullet.BULLETW / 2;
-        int bY = y + TankH / 2 - Bullet.BULLETH / 2;
-        Bullet bullet = new Bullet(bX, bY, dir, group, this.tankFrame);
-        this.tankFrame.bullets.add(bullet);
-        if (group == Group.GOOD)
-            new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
+    private void fire(FireStrategy fs) {
+        fs.fireWithTank(this);
     }
 
     public void die() {

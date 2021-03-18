@@ -1,1 +1,3 @@
 initEnemyCount=5
+FireStrategy=com.shilei.tank.dp.strategy.FireStrategyEightDirs
+FireStrategyDefault=com.shilei.tank.dp.strategy.FireStrategyDefaultDir
