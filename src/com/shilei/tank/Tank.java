@@ -7,6 +7,7 @@ import com.shilei.util.RandomDir;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Random;
 
 import static java.awt.event.KeyEvent.*;
@@ -30,9 +31,14 @@ public class Tank {
 
     static {
         try {
-            fireStrategy = (FireStrategy) Class.forName(PropertyMgr.get("FireStrategy")).getConstructor().newInstance();
-            fireStrategyDefault = (FireStrategy) Class.forName(PropertyMgr.get("FireStrategyDefault")).getConstructor().newInstance();
-        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            Class clazz  =  Class.forName(PropertyMgr.get("FireStrategy"));
+            Method method =  clazz.getMethod("getInstance");
+            fireStrategy = (FireStrategy) method.invoke(clazz);
+
+            Class clazz2  =  Class.forName(PropertyMgr.get("FireStrategyDefault"));
+            Method method2 =  clazz2.getMethod("getInstance");
+            fireStrategyDefault = (FireStrategy) method2.invoke(clazz2);
+        } catch (ClassNotFoundException | NoSuchMethodException  | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }

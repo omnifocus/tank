@@ -8,6 +8,11 @@ import com.shilei.util.Audio;
 
 public class FireStrategyDefaultDir implements FireStrategy{
 
+    private static FireStrategyDefaultDir defaultDir = new FireStrategyDefaultDir();
+    private FireStrategyDefaultDir(){}
+    public static FireStrategyDefaultDir getInstance() {
+        return defaultDir;
+    }
     @Override
     public void fireWithTank(Tank tank) {
         int bX = tank.x + Tank.TankW / 2 - Bullet.BULLETW / 2;
