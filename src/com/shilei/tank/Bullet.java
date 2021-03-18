@@ -23,6 +23,7 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+        tf.bullets.add(this);
     }
 
     public void draw(Graphics g) {

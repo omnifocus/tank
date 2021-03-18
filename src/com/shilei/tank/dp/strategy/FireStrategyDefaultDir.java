@@ -18,7 +18,6 @@ public class FireStrategyDefaultDir implements FireStrategy{
         int bX = tank.x + Tank.TankW / 2 - Bullet.BULLETW / 2;
         int bY = tank.y + Tank.TankH / 2 - Bullet.BULLETH / 2;
         Bullet b = new Bullet(bX, bY, tank.dir, tank.group, tank.tankFrame);
-        tank.tankFrame.bullets.add(b);
         if (tank.group == Group.BAD)
             return;
         new Thread(()->new Audio("audio/tank_fire.wav").play()).start();

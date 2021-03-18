@@ -20,10 +20,6 @@ public class FireStrategyFourDirs implements FireStrategy{
         Bullet b2 = new Bullet(bX, bY, Dir.Down, tank.group, tank.tankFrame);
         Bullet b3 = new Bullet(bX, bY, Dir.Left, tank.group, tank.tankFrame);
         Bullet b4 = new Bullet(bX, bY, Dir.Right, tank.group, tank.tankFrame);
-        tank.tankFrame.bullets.add(b1);
-        tank.tankFrame.bullets.add(b2);
-        tank.tankFrame.bullets.add(b3);
-        tank.tankFrame.bullets.add(b4);
         if (tank.group == Group.BAD)
             return;
         new Thread(()->new Audio("audio/tank_fire.wav").play()).start();

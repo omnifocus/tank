@@ -25,14 +25,6 @@ public class FireStrategyEightDirs implements FireStrategy{
         Bullet b6 = new Bullet(bX, bY, Dir.UR,tank.group, tank.tankFrame);
         Bullet b7 = new Bullet(bX, bY, Dir.DL,tank.group, tank.tankFrame);
         Bullet b8 = new Bullet(bX, bY, Dir.DR,tank.group, tank.tankFrame);
-        tank.tankFrame.bullets.add(b1);
-        tank.tankFrame.bullets.add(b2);
-        tank.tankFrame.bullets.add(b3);
-        tank.tankFrame.bullets.add(b4);
-        tank.tankFrame.bullets.add(b5);
-        tank.tankFrame.bullets.add(b6);
-        tank.tankFrame.bullets.add(b7);
-        tank.tankFrame.bullets.add(b8);
         if (tank.group == Group.BAD)
             return;
         new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
