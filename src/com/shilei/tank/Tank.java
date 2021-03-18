@@ -1,5 +1,7 @@
 package com.shilei.tank;
 
+import com.shilei.tank.dp.abstractfactory.AbstractFactory;
+import com.shilei.tank.dp.abstractfactory.AbstractImage;
 import com.shilei.tank.dp.strategy.FireStrategy;
 import com.shilei.util.Audio;
 import com.shilei.util.RandomDir;
@@ -20,14 +22,17 @@ public class Tank {
     public int y = 30;
     //增加是否移动属性
     boolean isMoving = true;
-    public static final int TankW = ResourceMgr.u.getWidth();
-    public static final int TankH = ResourceMgr.u.getHeight();
+
     public static final int TANK_SPEED = 5;
     public TankFrame tankFrame;
     boolean isAlive = true;
     public Group group = Group.BAD;
     public static FireStrategy fireStrategyGoodTank;
     public static FireStrategy fireStrategyBadTank;
+    public static AbstractFactory abstractFactory;
+
+    public static  int TankW;
+    public static  int TankH;
 
     static {
         try {
@@ -38,6 +43,14 @@ public class Tank {
             Class clazz2  =  Class.forName(PropertyMgr.get("FireStrategyBadTank"));
             Method method2 =  clazz2.getMethod("getInstance");
             fireStrategyBadTank = (FireStrategy) method2.invoke(clazz2);
+
+            Class clazz3  =  Class.forName(PropertyMgr.get("factory"));
+            Method method3 =  clazz3.getMethod("getInstance");
+            abstractFactory  = (AbstractFactory) method3.invoke(clazz3);
+
+            TankW = abstractFactory.createTankImg().width();
+            TankH = abstractFactory.createTankImg().height();
+
         } catch (ClassNotFoundException | NoSuchMethodException  | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
@@ -75,55 +88,55 @@ public class Tank {
         if (group == Group.BAD) {
             switch (dir) {
                 case Up:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.u : ResourceMgr.u2, x, y, null);
+                    g.drawImage(abstractFactory.createTankImg().u() ,x,  y, null);
                     break;
                 case Down:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.d : ResourceMgr.d2, x, y, null);
+                    g.drawImage( abstractFactory.createTankImg().d() ,x,y, null);
                     break;
                 case Left:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.l : ResourceMgr.l2, x, y, null);
+                    g.drawImage( abstractFactory.createTankImg().l(),x,  y, null);
                     break;
                 case Right:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.r : ResourceMgr.r2, x, y, null);
+                    g.drawImage( abstractFactory.createTankImg().r(),x,  y, null);
                     break;
                 case UL:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.ul: ResourceMgr.ul2 , x, y, null);
+                    g.drawImage( abstractFactory.createTankImg().ul(),x, y, null);
                     break;
                 case UR:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.ur : ResourceMgr.ur2, x, y, null);
+                    g.drawImage( abstractFactory.createTankImg().ur(),x, y, null);
                     break;
                 case DL:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.dl : ResourceMgr.dl2, x, y, null);
+                    g.drawImage( abstractFactory.createTankImg().dl(),x, y, null);
                     break;
                 case DR:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.dr : ResourceMgr.dr2, x, y, null);
+                    g.drawImage( abstractFactory.createTankImg().dr(),x,y, null);
                     break;
             }
         } else {
             switch (dir) {
                 case Up:
-                    g.drawImage( step % threshold == 0 ?  ResourceMgr.mu : ResourceMgr.mu2, x, y, null);
+                    g.drawImage( abstractFactory.createTankImg().u(),x, y, null);
                     break;
                 case Down:
-                    g.drawImage(step % threshold == 0 ?  ResourceMgr.md : ResourceMgr.md2, x, y, null);
+                    g.drawImage( abstractFactory.createTankImg().d(),x, y, null);
                     break;
                 case Left:
-                    g.drawImage(step % threshold == 0 ? ResourceMgr.ml : ResourceMgr.ml2, x, y, null);
+                    g.drawImage(abstractFactory.createTankImg().l(),x,y, null);
                     break;
                 case Right:
-                    g.drawImage(step % threshold == 0 ? ResourceMgr.mr : ResourceMgr.mr2, x, y, null);
+                    g.drawImage(abstractFactory.createTankImg().r(),x, y, null);
                     break;
                 case UL:
-                    g.drawImage(step % threshold == 0 ? ResourceMgr.mul : ResourceMgr.mul2, x, y, null);
+                    g.drawImage(abstractFactory.createTankImg().ul(),x, y, null);
                     break;
                 case UR:
-                    g.drawImage(step % threshold == 0 ? ResourceMgr.mur : ResourceMgr.mur2, x, y, null);
+                    g.drawImage(abstractFactory.createTankImg().ur(),x, y, null);
                     break;
                 case DL:
-                    g.drawImage(step % threshold == 0 ? ResourceMgr.mdl : ResourceMgr.mdl2, x, y, null);
+                    g.drawImage(abstractFactory.createTankImg().dl(),x, y, null);
                     break;
                 case DR:
-                    g.drawImage(step % threshold == 0 ? ResourceMgr.mdr : ResourceMgr.mdr2, x, y, null);
+                    g.drawImage(abstractFactory.createTankImg().dr(),x, y, null);
                     break;
             }
         }

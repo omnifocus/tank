@@ -1,21 +1,36 @@
 package com.shilei.tank;
 
+import com.shilei.tank.dp.abstractfactory.AbstractFactory;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
+import java.lang.reflect.Method;
 
 import static java.awt.event.KeyEvent.VK_CONTROL;
 
 public class Bullet {
     private int x,y;
-    public static final int BULLETW = ResourceMgr.bu.getWidth();
-    public static final int BULLETH = ResourceMgr.bu.getHeight();
+    public static  int BULLETW ;
+    public static  int BULLETH ;
     public static final int BULLET_SPEED = 10;
     private Dir dir;
     private TankFrame tf;
     boolean isAlive = true;
     private Group group = Group.BAD;
     Rectangle rectangle = new Rectangle(x,y,BULLETW,BULLETH);
+    static AbstractFactory abstractFactory;
+    static {
+        try {
+            Class clazz3 = Class.forName(PropertyMgr.get("factory"));
+            Method method3 = clazz3.getMethod("getInstance");
+            abstractFactory = (AbstractFactory) method3.invoke(clazz3);
+            BULLETW = abstractFactory.createBulletImg().width();
+            BULLETH = abstractFactory.createBulletImg().height();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public Bullet(int x, int y, Dir dir,Group group,TankFrame tf) {
         this.x = x;
@@ -31,28 +46,28 @@ public class Bullet {
             this.tf.bullets.remove(this);
         switch (dir) {
             case Up:
-                g.drawImage(ResourceMgr.bu,x,y,null);
+                g.drawImage(abstractFactory.createBulletImg().u(),x,y,null);
                 break;
             case Down:
-                g.drawImage(ResourceMgr.bd,x,y,null);
+                g.drawImage(abstractFactory.createBulletImg().d(),x,y,null);
                 break;
             case Left:
-                g.drawImage(ResourceMgr.bl,x,y,null);
+                g.drawImage(abstractFactory.createBulletImg().l(),x,y,null);
                 break;
             case Right:
-                g.drawImage(ResourceMgr.br,x,y,null);
+                g.drawImage(abstractFactory.createBulletImg().r(),x,y,null);
                 break;
             case UL:
-                g.drawImage(ResourceMgr.bul,x,y,null);
+                g.drawImage(abstractFactory.createBulletImg().ul(),x,y,null);
                 break;
             case UR:
-                g.drawImage(ResourceMgr.bur,x,y,null);
+                g.drawImage(abstractFactory.createBulletImg().ur(),x,y,null);
                 break;
             case DL:
-                g.drawImage(ResourceMgr.bdl,x,y,null);
+                g.drawImage(abstractFactory.createBulletImg().dl(),x,y,null);
                 break;
             case DR:
-                g.drawImage(ResourceMgr.bdr,x,y,null);
+                g.drawImage(abstractFactory.createBulletImg().dr(),x,y,null);
                 break;
         }
         move();
