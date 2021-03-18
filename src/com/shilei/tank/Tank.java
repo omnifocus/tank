@@ -268,7 +268,7 @@ public class Tank {
                 break;
 
             case VK_F1:
-                fire(fireStrategyBadTank);
+                fire(fireStrategyGoodTank);
                 break;
         }
         setDir();
