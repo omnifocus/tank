@@ -26,18 +26,18 @@ public class Tank {
     public TankFrame tankFrame;
     boolean isAlive = true;
     public Group group = Group.BAD;
-    public static FireStrategy fireStrategy;
-    public static FireStrategy fireStrategyDefault;
+    public static FireStrategy fireStrategyGoodTank;
+    public static FireStrategy fireStrategyBadTank;
 
     static {
         try {
-            Class clazz  =  Class.forName(PropertyMgr.get("FireStrategy"));
+            Class clazz  =  Class.forName(PropertyMgr.get("FireStrategyGoodTank"));
             Method method =  clazz.getMethod("getInstance");
-            fireStrategy = (FireStrategy) method.invoke(clazz);
+            fireStrategyGoodTank = (FireStrategy) method.invoke(clazz);
 
-            Class clazz2  =  Class.forName(PropertyMgr.get("FireStrategyDefault"));
+            Class clazz2  =  Class.forName(PropertyMgr.get("FireStrategyBadTank"));
             Method method2 =  clazz2.getMethod("getInstance");
-            fireStrategyDefault = (FireStrategy) method2.invoke(clazz2);
+            fireStrategyBadTank = (FireStrategy) method2.invoke(clazz2);
         } catch (ClassNotFoundException | NoSuchMethodException  | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
@@ -166,7 +166,7 @@ public class Tank {
         //随机让敌方坦克发子弹！
         if(group == Group.BAD && new Random().nextInt(100) > 98) {
             //子弹只能发射跟随坦克方向的子弹
-            fire(fireStrategyDefault);
+            fire(fireStrategyBadTank);
         }
         //敌方坦克随机方向
         if(group == Group.BAD && new Random().nextInt(100) > 98) {
@@ -268,7 +268,7 @@ public class Tank {
                 break;
 
             case VK_F1:
-                fire(fireStrategy);
+                fire(fireStrategyBadTank);
                 break;
         }
         setDir();
