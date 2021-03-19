@@ -1,13 +1,18 @@
 package com.shilei.dp.filter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Filter1 {
 
     public static void main(String[] args) {
         Message msg = new Message("<abc:)");
         HTMLFilter filter1 = new HTMLFilter();
         FaceFilter filter2 = new FaceFilter();
-        filter1.doFilter(msg);
-        filter2.doFilter(msg);
+        FilterChain chain = new FilterChain();
+        chain.addFilter(filter1);
+        chain.addFilter(filter2);
+        chain.doFilter(msg);
         System.out.println(msg.msg);
     }
 }
@@ -23,6 +28,8 @@ interface Filter {
     void doFilter(Message msg);
 }
 
+
+
 class HTMLFilter implements Filter {
 
     @Override
@@ -35,5 +42,17 @@ class FaceFilter implements Filter {
     @Override
     public void doFilter(Message msg) {
         msg.msg = msg.msg.replace(":)","^_^");
+    }
+}
+
+class FilterChain {
+    List<Filter> filterlist = new ArrayList<>();
+    void addFilter(Filter filter) {
+        filterlist.add(filter);
+    }
+    void doFilter(Message msg) {
+        for (Filter filter : filterlist) {
+            filter.doFilter(msg);
+        }
     }
 }
