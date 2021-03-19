@@ -6,16 +6,17 @@ import java.util.List;
 public class Filter1 {
 
     public static void main(String[] args) {
-        Message msg = new Message("<abc:)www.yovya.com996");
-        HTMLFilter filter1 = new HTMLFilter();
-        FaceFilter filter2 = new FaceFilter();
+
         FilterChain chain = new FilterChain();
-        chain.addFilter(filter1).addFilter(filter2);
-        FilterChain chain2 = new FilterChain();
-        chain2.addFilter(new SensitiveFilter()).addFilter(new URLFilter());
-        chain.addFilter(chain2);
-        chain.doFilter(msg);
-        System.out.println(msg.msg);
+        chain.addFilter(new URLFilter()).addFilter(new SensitiveFilter())
+                .addFilter(new FaceFilter()).addFilter(new HTMLFilter());
+
+        Request req = new Request("req:<abc:)www.yovya.com996");
+        Response resp = new Response("resp:<abc:)www.yovya.com996");
+        chain.doFilter(req,resp);
+        System.out.println("结果：-----");
+        System.out.println(req.reqStr);
+        System.out.println(resp.respStr);
     }
 }
 
@@ -28,62 +29,88 @@ class Message {
 }
 
 interface Filter {
-    boolean doFilter(Message msg);
+    void doFilter(Request req,Response resp,FilterChain chain);
 }
 
 
 class HTMLFilter implements Filter {
 
     @Override
-    public boolean doFilter(Message msg) {
-        msg.msg = msg.msg.replace("<", "[");
-        return true;
+    public void doFilter(Request req,Response resp,FilterChain chain) {
+        req.reqStr = req.reqStr.replace("<", "[");
+        System.out.println("HTMLFilter.doFilter.req执行");
+        chain.doFilter(req,resp);
+        resp.respStr = resp.respStr.replace("<", "[");
+        System.out.println("HTMLFilter.doFilter.resp执行");
     }
 }
 
 class FaceFilter implements Filter {
 
     @Override
-    public boolean doFilter(Message msg) {
-        msg.msg = msg.msg.replace(":)", "^_^");
-        return true;
+    public void doFilter(Request req,Response resp,FilterChain chain) {
+        req.reqStr = req.reqStr.replace(":)", "^_^");
+        System.out.println("FaceFilter.doFilter.req执行");
+        chain.doFilter(req,resp);
+        resp.respStr = resp.respStr.replace(":)", "^_^");
+        System.out.println("FaceFilter.doFilter.resp执行");
     }
 }
 
 class SensitiveFilter implements Filter {
 
     @Override
-    public boolean doFilter(Message msg) {
-        msg.msg = msg.msg.replace("996", "965");
-        return false;
+    public void doFilter(Request req,Response resp,FilterChain chain) {
+        req.reqStr = req.reqStr.replace("996", "965");
+        System.out.println("SensitiveFilter.doFilter.req执行");
+        chain.doFilter(req,resp);
+        resp.respStr = resp.respStr.replace("996", "965");
+        System.out.println("SensitiveFilter.doFilter.resp执行");
+
     }
 }
 
 class URLFilter implements Filter {
 
     @Override
-    public boolean doFilter(Message msg) {
-        msg.msg = msg.msg.replace("www", "http://www");
-        return true;
+    public void doFilter(Request req,Response resp,FilterChain chain) {
+        System.out.println("URLFilter.doFilter.req执行");
+        req.reqStr = req.reqStr.replace("www", "http://www");
+        chain.doFilter(req,resp);
+        resp.respStr = resp.respStr.replace("www", "http://www");
+        System.out.println("URLFilter.doFilter.resp执行");
+
     }
 }
 
 
-class FilterChain implements Filter {
+class FilterChain {
     List<Filter> filterlist = new ArrayList<>();
+    int step ;
 
     FilterChain addFilter(Filter filter) {
         filterlist.add(filter);
         return this;
     }
 
-    @Override
-    public boolean doFilter(Message msg) {
-        for (Filter filter : filterlist) {
-            if (!filter.doFilter(msg))
-                return false;
-        }
-        //因为是个链，所以里面的过滤器都判断后再进行返回
-        return true;
+    public void doFilter(Request req,Response resp) {
+         if (step < filterlist.size())
+            filterlist.get(step++).doFilter(req,resp,this);
+    }
+}
+
+class Request {
+    String reqStr;
+
+    public Request(String reqStr) {
+        this.reqStr = reqStr;
+    }
+}
+
+class Response {
+    String respStr;
+
+    public Response(String respStr) {
+        this.respStr = respStr;
     }
 }
