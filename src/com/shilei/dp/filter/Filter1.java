@@ -28,39 +28,43 @@ class Message {
 }
 
 interface Filter {
-    void doFilter(Message msg);
+    boolean doFilter(Message msg);
 }
 
 
 class HTMLFilter implements Filter {
 
     @Override
-    public void doFilter(Message msg) {
+    public boolean doFilter(Message msg) {
         msg.msg = msg.msg.replace("<", "[");
+        return true;
     }
 }
 
 class FaceFilter implements Filter {
 
     @Override
-    public void doFilter(Message msg) {
+    public boolean doFilter(Message msg) {
         msg.msg = msg.msg.replace(":)", "^_^");
+        return true;
     }
 }
 
 class SensitiveFilter implements Filter {
 
     @Override
-    public void doFilter(Message msg) {
+    public boolean doFilter(Message msg) {
         msg.msg = msg.msg.replace("996", "965");
+        return false;
     }
 }
 
 class URLFilter implements Filter {
 
     @Override
-    public void doFilter(Message msg) {
+    public boolean doFilter(Message msg) {
         msg.msg = msg.msg.replace("www", "http://www");
+        return true;
     }
 }
 
@@ -74,9 +78,12 @@ class FilterChain implements Filter {
     }
 
     @Override
-    public void doFilter(Message msg) {
+    public boolean doFilter(Message msg) {
         for (Filter filter : filterlist) {
-            filter.doFilter(msg);
+            if (!filter.doFilter(msg))
+                return false;
         }
+        //因为是个链，所以里面的过滤器都判断后再进行返回
+        return true;
     }
 }
