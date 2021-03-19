@@ -10,8 +10,7 @@ public class Filter1 {
         HTMLFilter filter1 = new HTMLFilter();
         FaceFilter filter2 = new FaceFilter();
         FilterChain chain = new FilterChain();
-        chain.addFilter(filter1);
-        chain.addFilter(filter2);
+        chain.addFilter(filter1).addFilter(filter2);
         chain.doFilter(msg);
         System.out.println(msg.msg);
     }
@@ -47,8 +46,9 @@ class FaceFilter implements Filter {
 
 class FilterChain {
     List<Filter> filterlist = new ArrayList<>();
-    void addFilter(Filter filter) {
+    FilterChain addFilter(Filter filter) {
         filterlist.add(filter);
+        return this;
     }
     void doFilter(Message msg) {
         for (Filter filter : filterlist) {
