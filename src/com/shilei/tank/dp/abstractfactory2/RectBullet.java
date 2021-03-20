@@ -1,9 +1,6 @@
 package com.shilei.tank.dp.abstractfactory2;
 
-import com.shilei.tank.Dir;
-import com.shilei.tank.Group;
-import com.shilei.tank.ResourceMgr;
-import com.shilei.tank.TankFrame;
+import com.shilei.tank.*;
 
 import java.awt.*;
 
@@ -13,25 +10,25 @@ public class RectBullet extends BaseBullet {
     public static  int BULLETH = ResourceMgr.bd.getHeight();
     public static final int BULLET_SPEED = 10;
     private Dir dir;
-    private TankFrame tf;
+    private GameModel gm;
     boolean isAlive = true;
     private Group group = Group.BAD;
 
 
 
-    public RectBullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public RectBullet(int x, int y, Dir dir, Group group, GameModel gm) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tf = tf;
-        tf.bullets.add(this);
+        this.gm = gm;
+        gm.bullets.add(this);
         this.rectangle = new Rectangle(x,y,BULLETW,BULLETH);
     }
 
     public void draw(Graphics g) {
         if (!isAlive)
-            this.tf.bullets.remove(this);
+            this.gm.bullets.remove(this);
         Color c = g.getColor();
         g.setColor(Color.yellow);
         g.fillRect(x,y,BULLETW,BULLETH);
@@ -76,7 +73,7 @@ public class RectBullet extends BaseBullet {
     public void collide(BaseTank tank) {
         if (group == tank.group) return;
         if (this.rectangle.intersects(tank.rectangle)) {
-            tf.explodes.add(TankFrame.abstractFactory.genExplode(tank.x,tank.y,tf));
+            gm.explodes.add(GameModel.abstractFactory.genExplode(tank.x,tank.y,gm));
             this.die();
             tank.die();
         }

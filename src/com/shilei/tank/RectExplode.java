@@ -9,13 +9,13 @@ public class RectExplode extends BaseExplode {
     private int x, y;
     public static int explodeW = ResourceMgr.explodes[0].getWidth();
     public static int explodeH = ResourceMgr.explodes[0].getHeight();
-    private TankFrame tf;
+    private GameModel gm;
     private int step = 0;
 
-    public RectExplode(int x, int y, TankFrame tf) {
+    public RectExplode(int x, int y, GameModel gm) {
         this.x = x;
         this.y = y;
-        this.tf = tf;
+        this.gm = gm;
         new Thread(() -> new Audio("audio/explode.wav").play()).start();
     }
 
@@ -26,7 +26,7 @@ public class RectExplode extends BaseExplode {
             g.fillRect(x, y, explodeW + step * 10, explodeH + step * 10);
             g.setColor(c);
         } else {
-            tf.explodes.remove(this);
+            gm.explodes.remove(this);
         }
     }
 

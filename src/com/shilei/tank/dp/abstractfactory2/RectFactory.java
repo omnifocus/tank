@@ -1,9 +1,6 @@
 package com.shilei.tank.dp.abstractfactory2;
 
-import com.shilei.tank.Dir;
-import com.shilei.tank.Group;
-import com.shilei.tank.RectExplode;
-import com.shilei.tank.TankFrame;
+import com.shilei.tank.*;
 
 public class RectFactory extends AbstractFactory{
     private static RectFactory rectFactory = new RectFactory();
@@ -12,17 +9,17 @@ public class RectFactory extends AbstractFactory{
         return rectFactory;
     }
     @Override
-    public BaseTank genTank(int x, int y, Dir dir, Group group, TankFrame tf) {
-        return new RectTank(x,y,dir,group,tf);
+    public BaseTank genTank(int x, int y, Dir dir, Group group, GameModel gm) {
+        return new RectTank(x,y,dir,group,gm);
     }
 
     @Override
-    public BaseBullet genBullet(int x, int y, Dir dir, Group group, TankFrame tf) {
-        return new RectBullet(x,y,dir,group,tf);
+    public BaseBullet genBullet(int x, int y, Dir dir, Group group, GameModel gm) {
+        return new RectBullet(x,y,dir,group,gm);
     }
 
     @Override
-    public BaseExplode genExplode(int x, int y, TankFrame tf) {
-        return new RectExplode(x,y,tf);
+    public BaseExplode genExplode(int x, int y, GameModel gm) {
+        return new RectExplode(x,y,gm);
     }
 }

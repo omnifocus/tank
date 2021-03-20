@@ -1,6 +1,7 @@
 package com.shilei.tank.dp.abstractfactory2;
 
 import com.shilei.tank.Dir;
+import com.shilei.tank.GameModel;
 import com.shilei.tank.Group;
 import com.shilei.tank.TankFrame;
 
@@ -13,7 +14,7 @@ public abstract class BaseTank {
     public Rectangle rectangle;
     public int x, y;
     public Dir dir;
-    public TankFrame tankFrame;
+    public GameModel gm;
 
     public abstract void draw(Graphics g);
 

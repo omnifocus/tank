@@ -1,8 +1,12 @@
 package com.shilei.tank.dp.strategy;
 
-import com.shilei.tank.*;
+import com.shilei.tank.Bullet;
+import com.shilei.tank.Dir;
+import com.shilei.tank.Group;
+import com.shilei.tank.Tank;
 import com.shilei.tank.dp.abstractfactory2.BaseTank;
 import com.shilei.util.Audio;
+import com.sun.xml.internal.rngom.parse.host.Base;
 
 public class FireStrategyEightDirs implements FireStrategy{
 
@@ -16,7 +20,7 @@ public class FireStrategyEightDirs implements FireStrategy{
         int bX = tank.x + Tank.TankW / 2 - Bullet.BULLETW / 2;
         int bY = tank.y + Tank.TankH / 2 - Bullet.BULLETH / 2;
         for (Dir dir : Dir.values()) {
-            TankFrame.abstractFactory.genBullet(bX,bY,dir,tank.group,tank.tankFrame);
+            new Bullet(bX,bY,dir,tank.group,tank.gm);
         }
         if (tank.group == Group.BAD)
             return;

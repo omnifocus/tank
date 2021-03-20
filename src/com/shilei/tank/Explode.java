@@ -1,23 +1,21 @@
 package com.shilei.tank;
 
-import com.shilei.tank.dp.abstractfactory.AbstractFactory;
 import com.shilei.tank.dp.abstractfactory2.BaseExplode;
 import com.shilei.util.Audio;
 
 import java.awt.*;
-import java.lang.reflect.Method;
 
 public class Explode extends BaseExplode {
     private int x,y;
-    public static  int explodeW;
-    public static  int explodeH;
-    private TankFrame tf;
+    public static final int BULLETW = ResourceMgr.explodes[0].getWidth();
+    public static final int BULLETH = ResourceMgr.explodes[0].getHeight();
+    public GameModel gm;
     private int step = 0;
 
-    public Explode(int x, int y, TankFrame tf) {
+    public Explode(int x, int y, GameModel gm) {
         this.x = x;
         this.y = y;
-        this.tf = tf;
+        this.gm = gm;
         new Thread(()-> new Audio("audio/explode.wav").play()).start();
     }
 
@@ -25,7 +23,7 @@ public class Explode extends BaseExplode {
         if (step <= 15) {
             g.drawImage(ResourceMgr.explodes[step++], x,y,null);
         } else {
-            tf.explodes.remove(this);
+            gm.explodes.remove(this);
         }
     }
 

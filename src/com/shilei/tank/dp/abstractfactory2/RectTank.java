@@ -46,12 +46,12 @@ public class RectTank extends BaseTank {
     int threshold = 2;
 
 
-    public RectTank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
+    public RectTank(int x, int y, Dir dir, Group group, GameModel gm) {
         this.dir = dir;
         this.x = x;
         this.y = y;
         this.group = group;
-        this.tankFrame = tankFrame;
+        this.gm = gm;
         //为啥不能放外面
         rectangle = new  Rectangle(x,y,TankW,TankH);
     }
@@ -59,7 +59,7 @@ public class RectTank extends BaseTank {
     @Override
     public void draw(Graphics g) {
         if (!isAlive && group == Group.BAD) {
-            tankFrame.enemyTanks.remove(this);
+            gm.enemyTanks.remove(this);
         }
         Color c = g.getColor();
 
