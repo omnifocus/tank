@@ -18,7 +18,7 @@ public class FireStrategyEightDirs implements FireStrategy{
         int bX = tank.x + Tank.TankW / 2 - Bullet.BULLETW / 2;
         int bY = tank.y + Tank.TankH / 2 - Bullet.BULLETH / 2;
         for (Dir dir : Dir.values()) {
-            new Bullet(bX,bY,dir,tank.group,tank.tankFrame);
+            new Bullet(bX,bY,dir,tank.group,tank.gm);
         }
         if (tank.group == Group.BAD)
             return;

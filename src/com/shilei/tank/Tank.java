@@ -23,7 +23,7 @@ public class Tank {
     public static final int TankW = ResourceMgr.u.getWidth();
     public static final int TankH = ResourceMgr.u.getHeight();
     public static final int TANK_SPEED = 5;
-    public TankFrame tankFrame;
+    public GameModel gm ;
     boolean isAlive = true;
     public Group group = Group.BAD;
     public static FireStrategy fireStrategyGoodTank;
@@ -46,86 +46,23 @@ public class Tank {
     int step;
     int threshold = 2;
     Rectangle rectangle = new Rectangle(x,y,TankW,TankH);
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tankFrame) {
+    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
         this.dir = dir;
         this.x = x;
         this.y = y;
         this.group = group;
-        this.tankFrame = tankFrame;
+        this.gm = gm;
     }
 
-    /**
-     * 默认生成bad tank
-     * @param x
-     * @param y
-     * @param dir
-     * @param tankFrame
-     */
-    public Tank(int x, int y, Dir dir, TankFrame tankFrame) {
-        this.dir = dir;
-        this.x = x;
-        this.y = y;
-        this.tankFrame = tankFrame;
-    }
 
     void draw(Graphics g) {
         if (!isAlive && group == Group.BAD) {
-            tankFrame.enemyTanks.remove(this);
+            gm.enemyTanks.remove(this);
         }
         if (group == Group.BAD) {
-            switch (dir) {
-                case Up:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.u : ResourceMgr.u2, x, y, null);
-                    break;
-                case Down:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.d : ResourceMgr.d2, x, y, null);
-                    break;
-                case Left:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.l : ResourceMgr.l2, x, y, null);
-                    break;
-                case Right:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.r : ResourceMgr.r2, x, y, null);
-                    break;
-                case UL:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.ul: ResourceMgr.ul2 , x, y, null);
-                    break;
-                case UR:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.ur : ResourceMgr.ur2, x, y, null);
-                    break;
-                case DL:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.dl : ResourceMgr.dl2, x, y, null);
-                    break;
-                case DR:
-                    g.drawImage( step % threshold == 0 ? ResourceMgr.dr : ResourceMgr.dr2, x, y, null);
-                    break;
-            }
+           drawBadTank(g);
         } else {
-            switch (dir) {
-                case Up:
-                    g.drawImage( step % threshold == 0 ?  ResourceMgr.mu : ResourceMgr.mu2, x, y, null);
-                    break;
-                case Down:
-                    g.drawImage(step % threshold == 0 ?  ResourceMgr.md : ResourceMgr.md2, x, y, null);
-                    break;
-                case Left:
-                    g.drawImage(step % threshold == 0 ? ResourceMgr.ml : ResourceMgr.ml2, x, y, null);
-                    break;
-                case Right:
-                    g.drawImage(step % threshold == 0 ? ResourceMgr.mr : ResourceMgr.mr2, x, y, null);
-                    break;
-                case UL:
-                    g.drawImage(step % threshold == 0 ? ResourceMgr.mul : ResourceMgr.mul2, x, y, null);
-                    break;
-                case UR:
-                    g.drawImage(step % threshold == 0 ? ResourceMgr.mur : ResourceMgr.mur2, x, y, null);
-                    break;
-                case DL:
-                    g.drawImage(step % threshold == 0 ? ResourceMgr.mdl : ResourceMgr.mdl2, x, y, null);
-                    break;
-                case DR:
-                    g.drawImage(step % threshold == 0 ? ResourceMgr.mdr : ResourceMgr.mdr2, x, y, null);
-                    break;
-            }
+           drawGoodTank(g);
         }
         //画完再移动
         move();
@@ -135,13 +72,85 @@ public class Tank {
         rectangle.y = y;
     }
 
+    private void drawGoodTank(Graphics g) {
+        switch (dir) {
+            case Up:
+                g.drawImage( step % threshold == 0 ?  ResourceMgr.mu : ResourceMgr.mu2, x, y, null);
+                break;
+            case Down:
+                g.drawImage(step % threshold == 0 ?  ResourceMgr.md : ResourceMgr.md2, x, y, null);
+                break;
+            case Left:
+                g.drawImage(step % threshold == 0 ? ResourceMgr.ml : ResourceMgr.ml2, x, y, null);
+                break;
+            case Right:
+                g.drawImage(step % threshold == 0 ? ResourceMgr.mr : ResourceMgr.mr2, x, y, null);
+                break;
+            case UL:
+                g.drawImage(step % threshold == 0 ? ResourceMgr.mul : ResourceMgr.mul2, x, y, null);
+                break;
+            case UR:
+                g.drawImage(step % threshold == 0 ? ResourceMgr.mur : ResourceMgr.mur2, x, y, null);
+                break;
+            case DL:
+                g.drawImage(step % threshold == 0 ? ResourceMgr.mdl : ResourceMgr.mdl2, x, y, null);
+                break;
+            case DR:
+                g.drawImage(step % threshold == 0 ? ResourceMgr.mdr : ResourceMgr.mdr2, x, y, null);
+                break;
+        }
+    }
+
+    private void drawBadTank(Graphics g) {
+        switch (dir) {
+            case Up:
+                g.drawImage( step % threshold == 0 ? ResourceMgr.u : ResourceMgr.u2, x, y, null);
+                break;
+            case Down:
+                g.drawImage( step % threshold == 0 ? ResourceMgr.d : ResourceMgr.d2, x, y, null);
+                break;
+            case Left:
+                g.drawImage( step % threshold == 0 ? ResourceMgr.l : ResourceMgr.l2, x, y, null);
+                break;
+            case Right:
+                g.drawImage( step % threshold == 0 ? ResourceMgr.r : ResourceMgr.r2, x, y, null);
+                break;
+            case UL:
+                g.drawImage( step % threshold == 0 ? ResourceMgr.ul: ResourceMgr.ul2 , x, y, null);
+                break;
+            case UR:
+                g.drawImage( step % threshold == 0 ? ResourceMgr.ur : ResourceMgr.ur2, x, y, null);
+                break;
+            case DL:
+                g.drawImage( step % threshold == 0 ? ResourceMgr.dl : ResourceMgr.dl2, x, y, null);
+                break;
+            case DR:
+                g.drawImage( step % threshold == 0 ? ResourceMgr.dr : ResourceMgr.dr2, x, y, null);
+                break;
+        }
+    }
+
     private void move() {
         //移动状态下画出来才有效果
         if (!isMoving)
             return;
 
         boundCheck();
+        handlePosition();
 
+        //随机让敌方坦克发子弹！
+        if(group == Group.BAD && new Random().nextInt(100) > 98) {
+            //子弹只能发射跟随坦克方向的子弹
+            fire(fireStrategyBadTank);
+        }
+        //敌方坦克随机方向
+        if(group == Group.BAD && new Random().nextInt(100) > 98) {
+            dir = RandomDir.randomDir();
+        }
+
+    }
+
+    private void handlePosition() {
         if (dir == Dir.Up) {
             y -= TANK_SPEED;
         } else if (dir == Dir.Down) {
@@ -163,16 +172,6 @@ public class Tank {
             y += TANK_SPEED;
             x += TANK_SPEED;
         }
-        //随机让敌方坦克发子弹！
-        if(group == Group.BAD && new Random().nextInt(100) > 98) {
-            //子弹只能发射跟随坦克方向的子弹
-            fire(fireStrategyBadTank);
-        }
-        //敌方坦克随机方向
-        if(group == Group.BAD && new Random().nextInt(100) > 98) {
-            dir = RandomDir.randomDir();
-        }
-
     }
 
     private void boundCheck() {
@@ -268,7 +267,7 @@ public class Tank {
                 break;
 
             case VK_F1:
-                fire(fireStrategyBadTank);
+                fire(fireStrategyGoodTank);
                 break;
         }
         setDir();
