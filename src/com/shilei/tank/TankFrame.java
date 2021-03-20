@@ -14,7 +14,6 @@ import java.util.Random;
 import static java.awt.event.KeyEvent.*;
 
 public class TankFrame extends Frame {
-    GameModel gm = new GameModel();
     public static final int frameW = 1200, frameH = 600;
     int x = 150, y = 100;
 
@@ -36,19 +35,19 @@ public class TankFrame extends Frame {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                gm.tank.handleKeyPressed(e);
+                GameModel.getInstance().tank.handleKeyPressed(e);
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                gm.tank.handleKeyReleased(e);
+                GameModel.getInstance().tank.handleKeyReleased(e);
             }
         });
     }
 
     @Override
     public void paint(Graphics g) {
-        gm.draw(g);
+        GameModel.getInstance().draw(g);
     }
 
 

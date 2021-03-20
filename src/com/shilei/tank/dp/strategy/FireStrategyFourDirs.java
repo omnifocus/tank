@@ -17,10 +17,10 @@ public class FireStrategyFourDirs implements FireStrategy{
         int bX = tank.x + Tank.TankW / 2 - Bullet.BULLETW / 2;
         int bY = tank.y + Tank.TankH / 2 - Bullet.BULLETH / 2;
 
-        new Bullet(bX, bY, Dir.Up, tank.group, tank.gm);
-        new Bullet(bX, bY, Dir.Down, tank.group, tank.gm);
-        new Bullet(bX, bY, Dir.Left, tank.group, tank.gm);
-        new Bullet(bX, bY, Dir.Right, tank.group, tank.gm);
+        new Bullet(bX, bY, Dir.Up, tank.group);
+        new Bullet(bX, bY, Dir.Down, tank.group);
+        new Bullet(bX, bY, Dir.Left, tank.group);
+        new Bullet(bX, bY, Dir.Right, tank.group);
         if (tank.group == Group.BAD)
             return;
         new Thread(()->new Audio("audio/tank_fire.wav").play()).start();

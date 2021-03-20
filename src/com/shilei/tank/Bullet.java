@@ -12,24 +12,22 @@ public  class Bullet extends GameObject {
     public static final int BULLETH = ResourceMgr.bu.getHeight();
     public static final int BULLET_SPEED = 10;
     private Dir dir;
-    private GameModel gm;
     boolean isAlive = true;
     private Group group = Group.BAD;
     Rectangle rectangle;
 
-    public Bullet(int x, int y, Dir dir,Group group,GameModel gm) {
+    public Bullet(int x, int y, Dir dir,Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gm = gm;
         this.rectangle = new Rectangle(x,y,BULLETW,BULLETH);
-        gm.add(this);
+        GameModel.getInstance().add(this);
     }
 
     public void draw(Graphics g) {
         if (!isAlive)
-            this.gm.remove(this);
+            GameModel.getInstance().remove(this);
         switch (dir) {
             case Up:
                 g.drawImage(ResourceMgr.bu,x,y,null);
@@ -96,7 +94,7 @@ public  class Bullet extends GameObject {
     public boolean collide(Tank tank) {
         if (group == tank.group) return false;
         if (this.rectangle.intersects(tank.rectangle)) {
-            gm.add(new Explode(tank.x ,tank.y ,gm));
+            GameModel.getInstance().add(new Explode(tank.x ,tank.y));
             this.die();
             tank.die();
             return true;

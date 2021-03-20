@@ -8,13 +8,12 @@ public class Explode extends GameObject {
     private int x,y;
     public static final int BULLETW = ResourceMgr.explodes[0].getWidth();
     public static final int BULLETH = ResourceMgr.explodes[0].getHeight();
-    public GameModel gm;
     private int step = 0;
 
-    public Explode(int x, int y, GameModel gm) {
+    public Explode(int x, int y) {
         this.x = x;
         this.y = y;
-        this.gm = gm;
+        GameModel.getInstance().add(this);
         new Thread(()-> new Audio("audio/explode.wav").play()).start();
     }
 
@@ -22,7 +21,7 @@ public class Explode extends GameObject {
         if (step <= 15) {
             g.drawImage(ResourceMgr.explodes[step++], x,y,null);
         } else {
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
         }
     }
 

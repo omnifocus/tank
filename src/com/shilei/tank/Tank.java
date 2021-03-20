@@ -49,13 +49,13 @@ public class Tank extends GameObject {
     }
 
 
-    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
+    public Tank(int x, int y, Dir dir, Group group) {
         this.dir = dir;
         this.x = x;
         this.y = y;
         this.group = group;
-        this.gm = gm;
         this.rectangle = new Rectangle(x, y, TankW, TankH);
+        GameModel.getInstance().add(this);
     }
 
     @Override

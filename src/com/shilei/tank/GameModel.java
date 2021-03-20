@@ -10,18 +10,21 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class GameModel {
-    Tank tank = new Tank(100,100,Dir.Right,Group.GOOD,this);
+    private static GameModel gm = new GameModel();
+    Tank tank = new Tank(100,100,Dir.Right,Group.GOOD);
     public java.util.List<GameObject> goes = new ArrayList<>();
     private FilterChain colliderChain;
-    public GameModel() {
+    private GameModel() {
         int size = Integer.parseInt((String) PropertyMgr.get("initEnemyCount"));
         for (int i=0;i<size;i++) {
-            Tank tank = new Tank(i*60, 100, RandomDir.randomDir(),Group.BAD,this);
-            goes.add(tank);
+            new Tank(i*60, 100, RandomDir.randomDir(),Group.BAD);
         }
         colliderChain = new FilterChain();
         colliderChain.addCollider(new BulletTankCollider())
                 .addCollider(new TankTankCollider());
+    }
+    public static GameModel getInstance() {
+        return gm;
     }
 
     public void draw(Graphics g) {
