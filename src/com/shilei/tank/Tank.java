@@ -23,7 +23,6 @@ public class Tank extends GameObject {
     public static final int TankW = ResourceMgr.u.getWidth();
     public static final int TankH = ResourceMgr.u.getHeight();
     public static final int TANK_SPEED = 5;
-    public GameModel gm;
     boolean isAlive = true;
     public Group group = Group.BAD;
     public static FireStrategy fireStrategyGoodTank;
@@ -61,7 +60,7 @@ public class Tank extends GameObject {
     @Override
     public void draw(Graphics g) {
         if (!isAlive && group == Group.BAD) {
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
         }
         if (group == Group.BAD) {
             drawBadTank(g);

@@ -11,10 +11,18 @@ import java.util.ArrayList;
 
 public class GameModel {
     private static GameModel gm = new GameModel();
-    Tank tank = new Tank(100,100,Dir.Right,Group.GOOD);
+    static {
+        gm.init();
+    }
+    Tank tank;
     public java.util.List<GameObject> goes = new ArrayList<>();
     private FilterChain colliderChain;
+
     private GameModel() {
+
+    }
+    private void init() {
+        tank = new Tank(100,100,Dir.Right,Group.GOOD);
         int size = Integer.parseInt((String) PropertyMgr.get("initEnemyCount"));
         for (int i=0;i<size;i++) {
             new Tank(i*60, 100, RandomDir.randomDir(),Group.BAD);
