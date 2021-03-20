@@ -13,7 +13,7 @@ import java.util.Random;
 import static java.awt.event.KeyEvent.*;
 import static java.awt.event.KeyEvent.VK_DOWN;
 
-public class Tank {
+public class Tank extends GameObject {
     boolean isUp, isDown, isLeft, isRight;
     public Dir dir = Dir.Down;
     public int x = 20;
@@ -23,7 +23,7 @@ public class Tank {
     public static final int TankW = ResourceMgr.u.getWidth();
     public static final int TankH = ResourceMgr.u.getHeight();
     public static final int TANK_SPEED = 5;
-    public GameModel gm ;
+    public GameModel gm;
     boolean isAlive = true;
     public Group group = Group.BAD;
     public static FireStrategy fireStrategyGoodTank;
@@ -31,21 +31,22 @@ public class Tank {
 
     static {
         try {
-            Class clazz  =  Class.forName(PropertyMgr.get("FireStrategyGoodTank"));
-            Method method =  clazz.getMethod("getInstance");
+            Class clazz = Class.forName(PropertyMgr.get("FireStrategyGoodTank"));
+            Method method = clazz.getMethod("getInstance");
             fireStrategyGoodTank = (FireStrategy) method.invoke(clazz);
 
-            Class clazz2  =  Class.forName(PropertyMgr.get("FireStrategyBadTank"));
-            Method method2 =  clazz2.getMethod("getInstance");
+            Class clazz2 = Class.forName(PropertyMgr.get("FireStrategyBadTank"));
+            Method method2 = clazz2.getMethod("getInstance");
             fireStrategyBadTank = (FireStrategy) method2.invoke(clazz2);
-        } catch (ClassNotFoundException | NoSuchMethodException  | IllegalAccessException | InvocationTargetException e) {
+        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }
 
     int step;
     int threshold = 2;
-    Rectangle rectangle = new Rectangle(x,y,TankW,TankH);
+    Rectangle rectangle = new Rectangle(x, y, TankW, TankH);
+
     public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
         this.dir = dir;
         this.x = x;
@@ -54,15 +55,15 @@ public class Tank {
         this.gm = gm;
     }
 
-
-    void draw(Graphics g) {
+    @Override
+    public void draw(Graphics g) {
         if (!isAlive && group == Group.BAD) {
-            gm.enemyTanks.remove(this);
+            gm.remove(this);
         }
         if (group == Group.BAD) {
-           drawBadTank(g);
+            drawBadTank(g);
         } else {
-           drawGoodTank(g);
+            drawGoodTank(g);
         }
         //画完再移动
         move();
@@ -75,10 +76,10 @@ public class Tank {
     private void drawGoodTank(Graphics g) {
         switch (dir) {
             case Up:
-                g.drawImage( step % threshold == 0 ?  ResourceMgr.mu : ResourceMgr.mu2, x, y, null);
+                g.drawImage(step % threshold == 0 ? ResourceMgr.mu : ResourceMgr.mu2, x, y, null);
                 break;
             case Down:
-                g.drawImage(step % threshold == 0 ?  ResourceMgr.md : ResourceMgr.md2, x, y, null);
+                g.drawImage(step % threshold == 0 ? ResourceMgr.md : ResourceMgr.md2, x, y, null);
                 break;
             case Left:
                 g.drawImage(step % threshold == 0 ? ResourceMgr.ml : ResourceMgr.ml2, x, y, null);
@@ -104,28 +105,28 @@ public class Tank {
     private void drawBadTank(Graphics g) {
         switch (dir) {
             case Up:
-                g.drawImage( step % threshold == 0 ? ResourceMgr.u : ResourceMgr.u2, x, y, null);
+                g.drawImage(step % threshold == 0 ? ResourceMgr.u : ResourceMgr.u2, x, y, null);
                 break;
             case Down:
-                g.drawImage( step % threshold == 0 ? ResourceMgr.d : ResourceMgr.d2, x, y, null);
+                g.drawImage(step % threshold == 0 ? ResourceMgr.d : ResourceMgr.d2, x, y, null);
                 break;
             case Left:
-                g.drawImage( step % threshold == 0 ? ResourceMgr.l : ResourceMgr.l2, x, y, null);
+                g.drawImage(step % threshold == 0 ? ResourceMgr.l : ResourceMgr.l2, x, y, null);
                 break;
             case Right:
-                g.drawImage( step % threshold == 0 ? ResourceMgr.r : ResourceMgr.r2, x, y, null);
+                g.drawImage(step % threshold == 0 ? ResourceMgr.r : ResourceMgr.r2, x, y, null);
                 break;
             case UL:
-                g.drawImage( step % threshold == 0 ? ResourceMgr.ul: ResourceMgr.ul2 , x, y, null);
+                g.drawImage(step % threshold == 0 ? ResourceMgr.ul : ResourceMgr.ul2, x, y, null);
                 break;
             case UR:
-                g.drawImage( step % threshold == 0 ? ResourceMgr.ur : ResourceMgr.ur2, x, y, null);
+                g.drawImage(step % threshold == 0 ? ResourceMgr.ur : ResourceMgr.ur2, x, y, null);
                 break;
             case DL:
-                g.drawImage( step % threshold == 0 ? ResourceMgr.dl : ResourceMgr.dl2, x, y, null);
+                g.drawImage(step % threshold == 0 ? ResourceMgr.dl : ResourceMgr.dl2, x, y, null);
                 break;
             case DR:
-                g.drawImage( step % threshold == 0 ? ResourceMgr.dr : ResourceMgr.dr2, x, y, null);
+                g.drawImage(step % threshold == 0 ? ResourceMgr.dr : ResourceMgr.dr2, x, y, null);
                 break;
         }
     }
@@ -139,12 +140,12 @@ public class Tank {
         handlePosition();
 
         //随机让敌方坦克发子弹！
-        if(group == Group.BAD && new Random().nextInt(100) > 98) {
+        if (group == Group.BAD && new Random().nextInt(100) > 98) {
             //子弹只能发射跟随坦克方向的子弹
             fire(fireStrategyBadTank);
         }
         //敌方坦克随机方向
-        if(group == Group.BAD && new Random().nextInt(100) > 98) {
+        if (group == Group.BAD && new Random().nextInt(100) > 98) {
             dir = RandomDir.randomDir();
         }
 

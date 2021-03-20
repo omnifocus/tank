@@ -6,7 +6,7 @@ import java.awt.geom.Rectangle2D;
 
 import static java.awt.event.KeyEvent.VK_CONTROL;
 
-public class Bullet {
+public  class Bullet extends GameObject {
     private int x,y;
     public static final int BULLETW = ResourceMgr.bu.getWidth();
     public static final int BULLETH = ResourceMgr.bu.getHeight();
@@ -24,12 +24,12 @@ public class Bullet {
         this.group = group;
         this.gm = gm;
         this.rectangle = new Rectangle(x,y,BULLETW,BULLETH);
-        gm.bullets.add(this);
+        gm.add(this);
     }
 
     public void draw(Graphics g) {
         if (!isAlive)
-            this.gm.bullets.remove(this);
+            this.gm.remove(this);
         switch (dir) {
             case Up:
                 g.drawImage(ResourceMgr.bu,x,y,null);
@@ -96,7 +96,7 @@ public class Bullet {
     public void collide(Tank tank) {
         if (group == tank.group) return;
         if (this.rectangle.intersects(tank.rectangle)) {
-            gm.explodes.add(new Explode(tank.x ,tank.y ,gm));
+            gm.add(new Explode(tank.x ,tank.y ,gm));
             this.die();
             tank.die();
         }

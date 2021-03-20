@@ -4,7 +4,7 @@ import com.shilei.util.Audio;
 
 import java.awt.*;
 
-public class Explode {
+public class Explode extends GameObject {
     private int x,y;
     public static final int BULLETW = ResourceMgr.explodes[0].getWidth();
     public static final int BULLETH = ResourceMgr.explodes[0].getHeight();
@@ -22,7 +22,7 @@ public class Explode {
         if (step <= 15) {
             g.drawImage(ResourceMgr.explodes[step++], x,y,null);
         } else {
-            gm.explodes.remove(this);
+            gm.remove(this);
         }
     }
 
