@@ -2,6 +2,7 @@ package com.shilei.tank;
 
 import com.shilei.tank.collider.BulletTankCollider;
 import com.shilei.tank.collider.Collide;
+import com.shilei.tank.collider.TankTankCollider;
 import com.shilei.util.RandomDir;
 
 import java.awt.*;
@@ -11,6 +12,7 @@ public class GameModel {
     Tank tank = new Tank(100,100,Dir.Right,Group.GOOD,this);
     public java.util.List<GameObject> goes = new ArrayList<>();
     Collide bulletTankCollider = new BulletTankCollider();
+    Collide tankTankCollider = new TankTankCollider();
     public GameModel() {
         int size = Integer.parseInt((String) PropertyMgr.get("initEnemyCount"));
         for (int i=0;i<size;i++) {
@@ -37,6 +39,7 @@ public class GameModel {
                 GameObject o1 = goes.get(i);
                 GameObject o2 = goes.get(j);
                 bulletTankCollider.collide(o1,o2);
+                tankTankCollider.collide(o1,o2);
             }
         }
 

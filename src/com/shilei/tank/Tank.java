@@ -28,6 +28,11 @@ public class Tank extends GameObject {
     public Group group = Group.BAD;
     public static FireStrategy fireStrategyGoodTank;
     public static FireStrategy fireStrategyBadTank;
+    int step;
+    int threshold = 2;
+    Rectangle rectangle;
+    int prevX;
+    int prevY;
 
     static {
         try {
@@ -43,9 +48,6 @@ public class Tank extends GameObject {
         }
     }
 
-    int step;
-    int threshold = 2;
-    Rectangle rectangle = new Rectangle(x, y, TankW, TankH);
 
     public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
         this.dir = dir;
@@ -53,6 +55,7 @@ public class Tank extends GameObject {
         this.y = y;
         this.group = group;
         this.gm = gm;
+        this.rectangle = new Rectangle(x, y, TankW, TankH);
     }
 
     @Override
@@ -65,6 +68,8 @@ public class Tank extends GameObject {
         } else {
             drawGoodTank(g);
         }
+        prevX = x;
+        prevY = y;
         //画完再移动
         move();
         step++;
@@ -281,6 +286,18 @@ public class Tank extends GameObject {
 
     public void die() {
         isAlive = false;
+    }
+
+    public void collideWith(Tank tank) {
+        if (rectangle.intersects(tank.rectangle)) {
+            stayBack();
+            tank.stayBack();
+        }
+    }
+
+    private void stayBack() {
+        this.x = prevX;
+        this.y = prevY;
     }
 
 

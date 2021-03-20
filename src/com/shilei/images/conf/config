@@ -1,3 +1,3 @@
-initEnemyCount=1
+initEnemyCount=10
 FireStrategyGoodTank=com.shilei.tank.dp.strategy.FireStrategyEightDirs
 FireStrategyBadTank=com.shilei.tank.dp.strategy.FireStrategyDefaultDir
