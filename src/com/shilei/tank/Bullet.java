@@ -7,7 +7,6 @@ import java.awt.geom.Rectangle2D;
 import static java.awt.event.KeyEvent.VK_CONTROL;
 
 public  class Bullet extends GameObject {
-    private int x,y;
     public static final int BULLETW = ResourceMgr.bu.getWidth();
     public static final int BULLETH = ResourceMgr.bu.getHeight();
     public static final int BULLET_SPEED = 10;
@@ -22,7 +21,7 @@ public  class Bullet extends GameObject {
         this.dir = dir;
         this.group = group;
         this.rectangle = new Rectangle(x,y,BULLETW,BULLETH);
-        GameModel.getInstance().add(this);
+//        GameModel.getInstance().add(this);
     }
 
     public void draw(Graphics g) {
@@ -57,6 +56,16 @@ public  class Bullet extends GameObject {
         move();
         rectangle.x = x;
         rectangle.y = y;
+    }
+
+    @Override
+    public int getWidth() {
+        return BULLETW;
+    }
+
+    @Override
+    public int getHeight() {
+        return BULLETH;
     }
 
     private void move() {

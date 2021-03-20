@@ -5,9 +5,8 @@ import com.shilei.util.Audio;
 import java.awt.*;
 
 public class Explode extends GameObject {
-    private int x,y;
-    public static final int BULLETW = ResourceMgr.explodes[0].getWidth();
-    public static final int BULLETH = ResourceMgr.explodes[0].getHeight();
+    public static final int EXPLODEW = ResourceMgr.explodes[0].getWidth();
+    public static final int EXPLODEH = ResourceMgr.explodes[0].getHeight();
     private int step = 0;
 
     public Explode(int x, int y) {
@@ -23,6 +22,16 @@ public class Explode extends GameObject {
         } else {
             GameModel.getInstance().remove(this);
         }
+    }
+
+    @Override
+    public int getWidth() {
+        return EXPLODEW;
+    }
+
+    @Override
+    public int getHeight() {
+        return EXPLODEH;
     }
 
 

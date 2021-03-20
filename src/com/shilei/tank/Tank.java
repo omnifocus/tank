@@ -16,8 +16,6 @@ import static java.awt.event.KeyEvent.VK_DOWN;
 public class Tank extends GameObject {
     boolean isUp, isDown, isLeft, isRight;
     public Dir dir = Dir.Down;
-    public int x = 20;
-    public int y = 30;
     //增加是否移动属性
     boolean isMoving = true;
     public static final int TankW = ResourceMgr.u.getWidth();
@@ -75,6 +73,16 @@ public class Tank extends GameObject {
         if (step == 2) step = 0;
         rectangle.x = x;
         rectangle.y = y;
+    }
+
+    @Override
+    public int getWidth() {
+        return TankW;
+    }
+
+    @Override
+    public int getHeight() {
+        return TankH;
     }
 
     private void drawGoodTank(Graphics g) {
