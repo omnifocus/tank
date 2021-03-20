@@ -15,7 +15,7 @@ public class Bullet {
     private GameModel gm;
     boolean isAlive = true;
     private Group group = Group.BAD;
-    Rectangle rectangle = new Rectangle(x,y,BULLETW,BULLETH);
+    Rectangle rectangle;
 
     public Bullet(int x, int y, Dir dir,Group group,GameModel gm) {
         this.x = x;
@@ -23,6 +23,7 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.gm = gm;
+        this.rectangle = new Rectangle(x,y,BULLETW,BULLETH);
         gm.bullets.add(this);
     }
 
