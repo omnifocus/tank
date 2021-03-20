@@ -6,19 +6,18 @@ import com.shilei.tank.collider.Collide;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilterChain {
+public class FilterChain implements Collide {
     private List<Collide> collideList = new ArrayList<>();
-    private int step;
     public FilterChain addCollider(Collide collide) {
         collideList.add(collide);
         return this;
     }
-
-    public void doFilter(GameObject o1,GameObject o2) {
-        if (step < collideList.size()) {
-            collideList.get(step++).collide(o1,o2,this);
-        } else {
-            step = 0;
-        }
+    @Override
+    public boolean collide(GameObject o1,GameObject o2) {
+      for (Collide collide:collideList) {
+          if (!collide.collide(o1,o2))
+              return false;
+      }
+      return true;
     }
 }

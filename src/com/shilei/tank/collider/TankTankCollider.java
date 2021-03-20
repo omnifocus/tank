@@ -8,12 +8,12 @@ import java.util.logging.Filter;
 
 public class TankTankCollider implements Collide{
     @Override
-    public void collide(GameObject o1, GameObject o2, FilterChain chain) {
+    public boolean collide(GameObject o1, GameObject o2) {
         if (o1 instanceof Tank && o2 instanceof Tank) {
             Tank t1 = (Tank) o1;
             Tank t2 = (Tank) o2;
             t1.collideWith(t2);
-            chain.doFilter(o1,o2);
         }
+        return true;
     }
 }

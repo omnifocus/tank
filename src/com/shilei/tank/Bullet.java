@@ -93,13 +93,15 @@ public  class Bullet extends GameObject {
     }
 
 
-    public void collide(Tank tank) {
-        if (group == tank.group) return;
+    public boolean collide(Tank tank) {
+        if (group == tank.group) return false;
         if (this.rectangle.intersects(tank.rectangle)) {
             gm.add(new Explode(tank.x ,tank.y ,gm));
             this.die();
             tank.die();
+            return true;
         }
+        return false;
     }
 
     private void die() {

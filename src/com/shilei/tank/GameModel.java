@@ -42,7 +42,7 @@ public class GameModel {
                 //如果一个子弹在碰的时候死了，那么get(i)保证了此时取到的是下一个东西
                 GameObject o1 = goes.get(i);
                 GameObject o2 = goes.get(j);
-                colliderChain.doFilter(o1,o2);
+                colliderChain.collide(o1,o2);
             }
         }
 
