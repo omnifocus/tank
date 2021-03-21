@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="tank" class="com.shilei.dp.dynamicproxy.spring.Tank"></bean>
+    <bean id="logProxy" class="com.shilei.dp.dynamicproxy.spring.LogProxy"></bean>
+    <aop:config>
+        <aop:aspect ref="logProxy">
+            <aop:pointcut id="pt" expression="execution(* com.shilei.dp.dynamicproxy.spring.Tank.move(..))" />
+            <aop:before method="logBefore" pointcut-ref="pt"/>
+            <aop:after method="logAfter" pointcut-ref="pt"/>
+        </aop:aspect>
+
+    </aop:config>
+    <!--不加这句，spring默认使用JDK代理而非cglib -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+</beans>
