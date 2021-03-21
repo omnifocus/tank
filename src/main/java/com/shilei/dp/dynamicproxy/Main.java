@@ -12,6 +12,7 @@ public class Main {
         Moveable moveable = (Moveable) Proxy.newProxyInstance(Tank.class.getClassLoader(), new Class<?>[]{Moveable.class}, new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                System.out.println(proxy instanceof Moveable);
                 Object obj = null;
                 System.out.println("开始执行...");
                 if (method.getName().equals("move")) {
