@@ -204,30 +204,54 @@ public class Tank extends GameObject {
     }
 
     private void setDir() {
+
         if (isUp && !isDown && !isLeft && !isRight)
             dir = Dir.Up;
-        if (!isUp && isDown && !isLeft && !isRight)
-            dir = Dir.Down;
-        if (!isUp && !isDown && isLeft && !isRight)
+
+        if (isUp && !isDown && !isLeft && isRight)
+            dir = Dir.UR;
+
+        if (isUp && !isDown && isLeft && !isRight)
+            dir = Dir.UL;
+        if (isUp && !isDown && isLeft && isRight)
+            dir = Dir.Up;
+
+        if (isUp && isDown && !isLeft && !isRight){}//默认是什么就是什么
+
+        if (isUp && isDown && !isLeft && isRight)
+                dir = Dir.Right;
+
+        if (isUp && isDown && isLeft && !isRight)
             dir = Dir.Left;
+        if (isUp && isDown && isLeft && isRight) {
+        }
+        //默认是什么就是什么
+
+        if (!isUp && !isDown && !isLeft && !isRight){}//默认是什么就是什么
+
+
         if (!isUp && !isDown && !isLeft && isRight)
             dir = Dir.Right;
 
-        if (isUp && isLeft && !isRight && !isDown) {
-            dir = Dir.UL;
-        }
-        if (isUp && isRight && !isLeft && !isDown) {
-            dir = Dir.UR;
-        }
-
-        if (isDown && isLeft && !isUp && !isRight) {
-            dir = Dir.DL;
+        if (!isUp && !isDown && isLeft && !isRight)
+            dir = Dir.Left;
+        if (!isUp && !isDown && isLeft && isRight){
+            //默认是什么就是什么
         }
 
-        if (isDown && isRight && !isUp && !isLeft) {
+
+        if (!isUp && isDown && !isLeft && !isRight) {
+            dir = Dir.Down;
+        }
+        //默认是什么就是什么
+        if (!isUp && isDown && !isLeft && isRight)
             dir = Dir.DR;
-        }
-        // 无需通过方向判断是否Stop
+
+        if (!isUp && isDown && isLeft && !isRight)
+            dir = Dir.DL;
+        if (!isUp && isDown && isLeft && isRight)
+            dir = Dir.Down;
+
 
     }
 
@@ -257,6 +281,7 @@ public class Tank extends GameObject {
     }
 
     public void handleKeyReleased(KeyEvent e) {
+
         switch (e.getKeyCode()) {
             case VK_UP:
                 isUp = false;
@@ -271,7 +296,7 @@ public class Tank extends GameObject {
                 isDown = false;
                 break;
 
-            case VK_F1:
+            case VK_ALT:
                 fire(fireStrategyGoodTank);
                 break;
         }
