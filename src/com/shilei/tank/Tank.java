@@ -16,7 +16,7 @@ public class Tank {
     Dir dir = Dir.Down;
     int x = 20, y = 30;
     //增加是否移动属性
-    boolean isMoving = true;
+    boolean isMoving = false;
     public static final int TankW = ResourceMgr.u.getWidth();
     public static final int TankH = ResourceMgr.u.getHeight();
     public static final int TANK_SPEED = 5;
@@ -52,6 +52,8 @@ public class Tank {
     void draw(Graphics g) {
         if (!isAlive && group == Group.BAD) {
             tankFrame.enemyTanks.remove(this);
+            System.out.println(this +"坦克被移除");
+            return;
         }
         if (group == Group.BAD) {
             switch (dir) {
@@ -145,13 +147,13 @@ public class Tank {
             x += TANK_SPEED;
         }
         //随机让敌方坦克发子弹！
-        if(group == Group.BAD && new Random().nextInt(100) > 98) {
-            fire();
-        }
+//        if(group == Group.BAD && new Random().nextInt(100) > 98) {
+//            fire();
+//        }
         //敌方坦克随机方向
-        if(group == Group.BAD && new Random().nextInt(100) > 98) {
-            dir = RandomDir.randomDir();
-        }
+//        if(group == Group.BAD && new Random().nextInt(100) > 98) {
+//            dir = RandomDir.randomDir();
+//        }
 
     }
 

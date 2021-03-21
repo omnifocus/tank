@@ -75,8 +75,12 @@ public class TankFrame extends Frame {
 
         for (int i=0;i<bullets.size();i++) {
             for (int j=0;j<enemyTanks.size();j++) {
-                bullets.get(i).collide(enemyTanks.get(j));
+                Bullet b = bullets.get(i);
+                Tank t = enemyTanks.get(j);
+                System.out.println("当前子弹"+b +" "+ i+"炸坦克"+t +" "+j);
+                b.collide(t);
             }
+            System.out.println("子弹炸坦克完毕！");
         }
 
         for (int i=0;i<bullets.size();i++)

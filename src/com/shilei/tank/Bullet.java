@@ -15,7 +15,7 @@ public class Bullet {
     private TankFrame tf;
     boolean isAlive = true;
     private Group group = Group.BAD;
-    Rectangle rectangle = new Rectangle(x,y,BULLETW,BULLETH);
+    Rectangle rectangle;
 
     public Bullet(int x, int y, Dir dir,Group group,TankFrame tf) {
         this.x = x;
@@ -23,11 +23,15 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+        rectangle = new Rectangle(x,y,BULLETW,BULLETH);
     }
 
     public void draw(Graphics g) {
-        if (!isAlive)
+
+        if (!isAlive) {
             this.tf.bullets.remove(this);
+            System.out.println(this +"子弹被移除");
+        }
         switch (dir) {
             case Up:
                 g.drawImage(ResourceMgr.bu,x,y,null);
