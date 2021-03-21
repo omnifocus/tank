@@ -1,5 +1,8 @@
 package com.shilei.tank;
 
+import com.shilei.tank.dp.listener.FireListener;
+import com.shilei.tank.dp.listener.MyEvent;
+import com.shilei.tank.dp.listener.MyFireListener;
 import com.shilei.tank.dp.strategy.FireStrategy;
 import com.shilei.util.Audio;
 import com.shilei.util.RandomDir;
@@ -8,13 +11,18 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static java.awt.event.KeyEvent.*;
 import static java.awt.event.KeyEvent.VK_DOWN;
 
 public class Tank extends GameObject {
-    boolean isUp, isDown, isLeft, isRight;
+    public boolean isUp;
+    public boolean isDown;
+    public boolean isLeft;
+    public boolean isRight;
     public Dir dir = Dir.Down;
     public int x = 20;
     public int y = 30;
@@ -32,7 +40,7 @@ public class Tank extends GameObject {
     Rectangle rectangle;
     int prevX;
     int prevY;
-
+    public List<FireListener> fireListeners = new ArrayList<>();
     static {
         try {
             Class clazz = Class.forName(PropertyMgr.get("FireStrategyGoodTank"));
@@ -55,6 +63,8 @@ public class Tank extends GameObject {
         this.group = group;
         this.rectangle = new Rectangle(x, y, TankW, TankH);
         GameModel.getInstance().add(this);
+        //添加监听器
+        fireListeners.add(new MyFireListener());
     }
 
     @Override
@@ -257,29 +267,15 @@ public class Tank extends GameObject {
     }
 
     public void handleKeyReleased(KeyEvent e) {
-        switch (e.getKeyCode()) {
-            case VK_UP:
-                isUp = false;
-                break;
-            case VK_LEFT:
-                isLeft = false;
-                break;
-            case VK_RIGHT:
-                isRight = false;
-                break;
-            case VK_DOWN:
-                isDown = false;
-                break;
-
-            case VK_F1:
-                fire(fireStrategyGoodTank);
-                break;
+        MyEvent event = new MyEvent(e,this);
+        for (FireListener listener: fireListeners) {
+            listener.doFire(event);
         }
         setDir();
         isMoving = false;
     }
 
-    private void fire(FireStrategy fs) {
+    public void fire(FireStrategy fs) {
         fs.fireWithTank(this);
     }
 
@@ -299,5 +295,7 @@ public class Tank extends GameObject {
         this.y = prevY;
     }
 
-
+    public void addFireListener(FireListener listener) {
+        this.fireListeners.add(listener);
+    }
 }
