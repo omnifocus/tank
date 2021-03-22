@@ -1,17 +1,14 @@
 package com.shilei.dp.iterator;
 
-import java.util.Arrays;
-import java.util.function.Supplier;
+public class ArrayList_<T> implements List<T> {
 
-public class ArrayList_ implements List {
-
-    private Object[] es = new Object[10];
+    private T[] es = (T[])new Object[10];
     private int index ;
     private int size ;
     @Override
-    public void add(Object e) {
+    public void add(T e) {
         if (size == es.length) {
-            Object[] es_ = new Object[es.length * 2];
+            T[] es_ = (T[])new Object[es.length * 2];
             System.arraycopy(es,0,es_,0,es.length);
             es = es_;
         }
@@ -27,8 +24,8 @@ public class ArrayList_ implements List {
     }
 
     @Override
-    public Iterator iterator() {
-        return new Iterator() {
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
             int i = 0;
             @Override
             public boolean hasNext() {
@@ -44,7 +41,7 @@ public class ArrayList_ implements List {
     }
 
     public static void main(String[] args) {
-        List list_ = new ArrayList_();
+        List<Integer> list_ = new ArrayList_();
         list_.add(1);
         list_.add(1);
         list_.add(1);
@@ -57,7 +54,7 @@ public class ArrayList_ implements List {
         list_.add(1);
         list_.add(1);
         list_.add(1);
-       Iterator it =  list_.iterator();
+       Iterator<Integer> it =  list_.iterator();
        while (it.hasNext()) {
            System.out.println(it.next());
        }

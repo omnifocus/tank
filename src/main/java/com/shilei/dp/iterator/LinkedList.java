@@ -1,13 +1,13 @@
 package com.shilei.dp.iterator;
 
-public class LinkedList implements List{
-    private Node head;
-    private Node tail;
+public class LinkedList<T> implements List<T>{
+    private Node<T> head;
+    private Node<T> tail;
     private int size;
     @Override
-    public void add(Object e) {
-        Node node = (Node) e;
-        if (head == null && tail == null) {
+    public void add(T e) {
+        Node<T> node = new Node(e,null);
+        if (head == null /* && tail == null*/) {
             head = node;
             tail = node;
         } else {
@@ -23,20 +23,20 @@ public class LinkedList implements List{
     }
 
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
 
-        return new Iterator() {
-            Node node = head;
+        return new Iterator<T>() {
+            Node<T> node = head;
             @Override
             public boolean hasNext() {
                 return node != null;
             }
 
             @Override
-            public Object next() {
-                Node node_ = node;
+            public T next() {
+                Node<T> node_ = node;
                 node = node.node;
-                return node_;
+                return node_.o;
             }
         };
     }
@@ -53,18 +53,18 @@ public class LinkedList implements List{
         linkedList.add(node3);
         linkedList.add(node4);
 
-        Iterator iterator = linkedList.iterator();
+        Iterator<Integer> iterator = linkedList.iterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }
 
     }
 }
-class Node {
-    Object o;
+class Node<T> {
+    T o;
     Node node;
 
-    public Node(Object o, Node node) {
+    public Node(T o, Node node) {
         this.o = o;
         this.node = node;
     }
@@ -73,7 +73,6 @@ class Node {
     public String toString() {
         return "Node{" +
                 "o=" + o +
-                ", node=" + node +
                 '}';
     }
 }

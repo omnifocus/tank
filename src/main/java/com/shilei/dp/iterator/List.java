@@ -1,7 +1,7 @@
 package com.shilei.dp.iterator;
 
-public interface List {
-    void add(Object e);
+public interface List<T> {
+    void add(T e);
     int getSize();
-    Iterator iterator();
+    Iterator<T> iterator();
 }
