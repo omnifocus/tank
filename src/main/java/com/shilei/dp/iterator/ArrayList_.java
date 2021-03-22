@@ -34,29 +34,21 @@ public class ArrayList_<T> implements List<T> {
             }
 
             @Override
-            public Object next() {
+            public T next() {
                 return es[i++];
             }
         };
     }
 
     public static void main(String[] args) {
-        List<Integer> list_ = new ArrayList_();
-        list_.add(1);
-        list_.add(1);
-        list_.add(1);
-        list_.add(1);
-        list_.add(1);
-        list_.add(1);
-        list_.add(1);
-        list_.add(1);
-        list_.add(1);
-        list_.add(1);
-        list_.add(1);
-        list_.add(1);
-       Iterator<Integer> it =  list_.iterator();
+        List<String> list_ = new ArrayList_();
+        list_.add("a");
+        list_.add("b");
+        list_.add("1");
+       Iterator<String> it =  list_.iterator();
        while (it.hasNext()) {
-           System.out.println(it.next());
+           String v = it.next();
+           System.out.println(v);
        }
     }
 

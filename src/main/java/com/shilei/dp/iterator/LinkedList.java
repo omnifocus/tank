@@ -43,28 +43,29 @@ public class LinkedList<T> implements List<T>{
 
 
     public static void main(String[] args) {
-        Node node1 = new Node(1,null);
-        Node node2 = new Node(2,null);
-        Node node3 = new Node(3,null);
-        Node node4 = new Node(4,null);
+        Node<String> node1 = new Node("1",null);
+        Node<String> node2 = new Node("2",null);
+        Node<String> node3 = new Node("3",null);
+        Node<String> node4 = new Node("4",null);
         List linkedList = new LinkedList();
         linkedList.add(node1);
         linkedList.add(node2);
         linkedList.add(node3);
         linkedList.add(node4);
 
-        Iterator<Integer> iterator = linkedList.iterator();
+        Iterator<Node<String>> iterator = linkedList.iterator();
         while (iterator.hasNext()) {
-            System.out.println(iterator.next());
+            Node<String> v = iterator.next();
+            System.out.println(v);
         }
 
     }
 }
 class Node<T> {
     T o;
-    Node node;
+    Node<T> node;
 
-    public Node(T o, Node node) {
+    public Node(T o, Node<T> node) {
         this.o = o;
         this.node = node;
     }
