@@ -23,20 +23,20 @@ public class LinkedList<T> implements List<T>{
     }
 
     @Override
-    public Iterator<T> iterator() {
+    public Iterator iterator() {
 
-        return new Iterator<T>() {
-            Node<T> node = head;
+        return new Iterator<Node<T>>() {
+            Node node = head;
             @Override
             public boolean hasNext() {
                 return node != null;
             }
 
             @Override
-            public T next() {
-                Node<T> node_ = node;
+            public Node<T> next() {
+                Node node_ = node;
                 node = node.node;
-                return node_.o;
+                return node_;
             }
         };
     }
